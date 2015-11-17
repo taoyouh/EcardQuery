@@ -1,0 +1,6 @@
+MainPackage=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\bin\ARM\Release\Upload\EcardQuery_1.1.2.0_ARM.appx
+SymbolPackage=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.2.0\EcardQuery_1.1.2.0_ARM.appxsym
+ResourcePack=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\_scale-100.appx
+ResourcePack=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\_scale-125.appx
+ResourcePack=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\_scale-150.appx
+ResourcePack=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\_scale-400.appx

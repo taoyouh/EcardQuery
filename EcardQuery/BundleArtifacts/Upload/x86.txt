@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\bin\x86\Release\Upload\EcardQuery_1.1.2.0_x86.appx
+SymbolPackage=C:\Users\Zhaoquan\documents\visual studio 2015\Projects\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.2.0\EcardQuery_1.1.2.0_x86.appxsym
