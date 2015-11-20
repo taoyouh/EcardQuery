@@ -141,6 +141,9 @@
     <Compile Include="MeCenterPage.xaml.cs">
       <DependentUpon>MeCenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OperationItem.xaml.cs">
+      <DependentUpon>OperationItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealtimeInquiryPage.xaml.cs">
       <DependentUpon>RealtimeInquiryPage.xaml</DependentUpon>
@@ -174,6 +177,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MeCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OperationItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

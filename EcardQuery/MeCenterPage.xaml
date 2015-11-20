@@ -18,21 +18,33 @@
     </Page.Transitions>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid MaxWidth="600" MaxHeight="300">
+        <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="accountStateBlock" Grid.ColumnSpan="3" TextAlignment="Center"/>
-            <Button x:Name="historyInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="交易历史查询" Click="historyInquiryButton_Click" />
-            <Button x:Name="realTimeInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="当日交易查询" Grid.Column="1" Click="realTimeInquiryButton_Click" />
-            <Button x:Name="logoutButton" Margin="8" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="注销" Click="logoutButton_Click" Grid.Column="2" />
+            <TextBlock Text="余额：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" />
+            <TextBlock x:Name="accountStateBlock" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
+            <GridView x:Name="operationPanel" Grid.Row="1" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None" ItemClick="gridView_ItemClick" Grid.ColumnSpan="2">
+                <GridView.Items>
+                    <local:OperationItem x:Name="op_historyInquiry" Title="交易历史" Width="200" Height="150">
+                        <local:OperationItem.Description>查询历史交易记录，但不能查询今天的交易</local:OperationItem.Description>
+                    </local:OperationItem>
+                    <local:OperationItem x:Name="op_realTimeInquiry" Title="今日流水" Width="200" Height="150">
+                        <local:OperationItem.Description>快速查询今天内的交易记录</local:OperationItem.Description>
+                    </local:OperationItem>
+                    <local:OperationItem x:Name="op_logout" Title="注销" Width="200" Height="150">
+                        <local:OperationItem.Description>注销当前用户</local:OperationItem.Description>
+                    </local:OperationItem>
+                    <!--<Button x:Name="historyInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="交易历史查询" Click="historyInquiryButton_Click" MinWidth="150" MinHeight="40" />
+                    <Button x:Name="realTimeInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="当日交易查询" Grid.Column="1" Click="realTimeInquiryButton_Click" />
+                    <Button x:Name="logoutButton" Margin="8" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="注销" Click="logoutButton_Click" Grid.Column="2" />-->
+                </GridView.Items>
+            </GridView>
         </Grid>
     </Grid>
 </Page>

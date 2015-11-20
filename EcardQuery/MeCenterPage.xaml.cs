@@ -54,20 +54,17 @@ namespace EcardQuery
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
-        private void historyInquiryButton_Click(object sender, RoutedEventArgs e)
+        private void gridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(HistoryInquiryPage));
-        }
-
-        private void logoutButton_Click(object sender, RoutedEventArgs e)
-        {
-            App.websiteHelper = new EcardWebsiteHelper();
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        private void realTimeInquiryButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(RealtimeInquiryPage));
+            if (e.ClickedItem == op_historyInquiry)
+                Frame.Navigate(typeof(HistoryInquiryPage));
+            else if (e.ClickedItem == op_realTimeInquiry)
+                Frame.Navigate(typeof(RealtimeInquiryPage));
+            else if (e.ClickedItem == op_logout)
+            {
+                App.websiteHelper = new EcardWebsiteHelper();
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }

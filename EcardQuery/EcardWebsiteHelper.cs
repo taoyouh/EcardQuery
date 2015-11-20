@@ -119,6 +119,7 @@ namespace EcardQuery
             s = s.Substring(s.LastIndexOf(">") + 1);
             s = s.Replace("（", "(");
             s = s.Replace("）", ")");
+            s = s.Replace(" ", "");
 
             string s1 = "";
             int index;
