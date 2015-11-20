@@ -30,12 +30,21 @@ namespace EcardQuery
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Frame.BackStack.Clear();
+
+            try
+            {
+                accountStateBlock.Text = await App.websiteHelper.GetBalance();
+            }
+            catch(Exception ex)
+            {
+                accountStateBlock.Text = "获取余额失败：\n" + ex.ToString();
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

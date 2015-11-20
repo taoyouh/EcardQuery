@@ -22,15 +22,17 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="historyInquiryButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="交易历史查询" Click="historyInquiryButton_Click" />
-            <Button x:Name="realTimeInquiryButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="当日交易查询" Grid.Column="1" Click="realTimeInquiryButton_Click" />
-            <Button x:Name="logoutButton" Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="注销" Click="logoutButton_Click" Grid.Column="2" />
+            <TextBlock x:Name="accountStateBlock" Grid.ColumnSpan="3" TextAlignment="Center"/>
+            <Button x:Name="historyInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="交易历史查询" Click="historyInquiryButton_Click" />
+            <Button x:Name="realTimeInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="当日交易查询" Grid.Column="1" Click="realTimeInquiryButton_Click" />
+            <Button x:Name="logoutButton" Margin="8" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="注销" Click="logoutButton_Click" Grid.Column="2" />
         </Grid>
     </Grid>
 </Page>

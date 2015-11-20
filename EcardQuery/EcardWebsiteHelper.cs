@@ -110,6 +110,28 @@ namespace EcardQuery
             }
         }
 
+        public async Task<string> GetBalance()
+        {
+            HttpResponseMessage response = await httpClient.GetAsync("/accountcardUser.action");
+            string s = await response.Content.ReadAsStringAsync();
+
+            s = s.Substring(0, s.IndexOf("<", s.IndexOf("余额")));
+            s = s.Substring(s.LastIndexOf(">") + 1);
+            s = s.Replace("（", "(");
+            s = s.Replace("）", ")");
+
+            string s1 = "";
+            int index;
+            while ((index = s.IndexOf(")")) >= 0)
+            {
+                s1 += s.Substring(0, index + 1) + "\n";
+                s = s.Substring(index + 1);
+            }
+            s1 = s1.Substring(0, s1.Count() - 1);
+
+            return s1;
+        }
+
         string historyContinueUrl;
         /// <summary>
         /// 初始化交易历史查询页面，并获取账户列表。
