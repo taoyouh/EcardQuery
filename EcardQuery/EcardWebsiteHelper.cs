@@ -143,6 +143,7 @@ namespace EcardQuery
         /// </summary>
         /// <param name="startDate">查询开始日期</param>
         /// <param name="endDate">查询结束日期</param>
+        /// <param name="accountId">要查询的账户名</param>
         /// <returns></returns>
         public async Task<List<TranscationData>> HistoryInquire(string startDate, string endDate,string accountId)
         {
@@ -248,6 +249,11 @@ namespace EcardQuery
         }
         #endregion
 
+        /// <summary>
+        /// 查询当日交易流水，不能超过16条。
+        /// </summary>
+        /// <param name="accountId">要查询的账户名</param>
+        /// <returns></returns>
         public async Task<List<TranscationData>> RealtimeInquire(string accountId)
         {
             List<TranscationData> datas = new List<TranscationData>();
@@ -264,6 +270,7 @@ namespace EcardQuery
             return datas;
         }
 
+        #region 实时查询中的私有函数
         private static void RealTime_ParseDatas(List<TranscationData> datas, string s)
         {
             int index1, index2;
@@ -312,6 +319,7 @@ namespace EcardQuery
             data.Id = int.Parse(content.Substring(0, content.IndexOf("</td>")));
             return data;
         }
+        #endregion
 
         private async Task<string> GetResponseContentStringAsync(HttpResponseMessage response)
         {
