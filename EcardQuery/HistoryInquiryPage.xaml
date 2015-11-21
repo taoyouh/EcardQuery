@@ -63,26 +63,7 @@
             <Button x:Name="expressButton1" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="8" Content="查询过去7天" Click="expressButton1_Click" />
             <Button x:Name="expressButton2" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="8" Content="查询过去30天" Grid.Column="1" Click="expressButton2_Click" />
         </Grid>
-        <ListView x:Name="displayList" ItemsSource="{Binding}" Grid.Column="1" Visibility="Collapsed">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Rectangle Width="40000" Grid.ColumnSpan="2" />
-                        <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" Height="40" HorizontalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="Auto" />
-                                <ColumnDefinition Width ="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="400" Grid.ColumnSpan="2" />
-                            <TextBlock Text="{Binding Time}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,3,0,0" FontSize="16" />
-                            <TextBlock Text="{Binding SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" />
-                            <TextBlock Text="{Binding Delta}" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontSize="20" Margin="0" Grid.Column="1" />
-                            <TextBlock Text="{Binding AccountBalance}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="11" Grid.Column="1" />
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50"/>
+        <local:TranscationDisplayList x:Name="displayList" Grid.Column="1" Visibility="Collapsed" />
+        <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>

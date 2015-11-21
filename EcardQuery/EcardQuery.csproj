@@ -148,6 +148,9 @@
     <Compile Include="RealtimeInquiryPage.xaml.cs">
       <DependentUpon>RealtimeInquiryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TranscationDisplayList.xaml.cs">
+      <DependentUpon>TranscationDisplayList.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RealtimeInquiryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TranscationDisplayList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

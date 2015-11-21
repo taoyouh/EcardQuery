@@ -53,7 +53,7 @@ namespace EcardQuery
             try
             {
                 dataList = await App.websiteHelper.HistoryInquire(startDate, endDate, (string)accountPicker.SelectedItem);
-                displayList.DataContext = dataList;
+                displayList.DataList = dataList;
                 isShowingData = true;
                 displayList.Visibility = Visibility.Visible;
                 if (ActualWidth < 600)

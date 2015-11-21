@@ -39,7 +39,7 @@ namespace EcardQuery
             try
             {
                 dataList = await App.websiteHelper.RealtimeInquire((string)accountPicker.SelectedItem);
-                displayList.DataContext = dataList;
+                displayList.DataList = dataList;
                 isShowingData = true;
                 displayList.Visibility = Visibility.Visible;
                 if (ActualWidth < 600)
