@@ -5,6 +5,7 @@
     xmlns:local="using:EcardQuery"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ad="using:Microsoft.Advertising.WinRT.UI"
     mc:Ignorable="d">
 
     <Page.Transitions>
@@ -51,9 +52,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" MaxHeight="100"/>
-                <RowDefinition Height="*" MaxHeight="100"/>
-                <RowDefinition Height="*" MaxHeight="100"/>
-
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ComboBox x:Name="accountPicker" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="8" />
             <CalendarDatePicker x:Name="startDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" PlaceholderText="开始日期" Grid.Row="1"/>
@@ -62,6 +61,7 @@
             <TextBlock x:Name="statusBlock" Grid.Row="3" Grid.ColumnSpan="2" Margin="12,12,12,12" />
             <Button x:Name="expressButton1" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="8" Content="查询过去7天" Click="expressButton1_Click" />
             <Button x:Name="expressButton2" Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="8" Content="查询过去30天" Grid.Column="1" Click="expressButton2_Click" />
+            <ad:AdControl Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" AdUnitId="11554055" ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" Width="300" Height="250" HorizontalAlignment="Center" />
         </Grid>
         <local:TranscationDisplayList x:Name="displayList" Grid.Column="1" Visibility="Collapsed" />
         <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Grid.ColumnSpan="2"/>

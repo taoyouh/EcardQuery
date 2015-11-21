@@ -5,11 +5,16 @@
     xmlns:local="using:EcardQuery"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ad="using:Microsoft.Advertising.WinRT.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <ListView x:Name="displayList" ItemsSource="{Binding}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -31,5 +36,11 @@
             </ListView.ItemTemplate>
         </ListView>
         <TextBlock x:Name="noDataHint" Text="没有查询到任何的数据" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{ThemeResource TextStyleLargeFontSize}" Visibility="Collapsed" />
+        <ad:AdControl ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" 
+                      AdUnitId="11554044" 
+                      HorizontalAlignment="Center" 
+                      Height="50" 
+                      VerticalAlignment="Bottom" 
+                      Width="300" Grid.Row="1"/>
     </Grid>
 </UserControl>
