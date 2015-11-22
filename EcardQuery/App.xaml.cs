@@ -33,7 +33,9 @@ namespace EcardQuery
         {
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
+                Microsoft.ApplicationInsights.WindowsCollectors.Session |
+                Microsoft.ApplicationInsights.WindowsCollectors.PageView |
+                Microsoft.ApplicationInsights.WindowsCollectors.UnhandledException);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
