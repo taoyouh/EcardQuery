@@ -62,7 +62,6 @@ namespace EcardQuery
                 Frame.Navigate(typeof(RealtimeInquiryPage));
             else if (e.ClickedItem == op_logout)
             {
-                App.websiteHelper = new EcardWebsiteHelper();
                 Frame.Navigate(typeof(MainPage));
             }
         }

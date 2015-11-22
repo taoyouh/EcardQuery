@@ -40,12 +40,37 @@ namespace EcardQuery
             }
 
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+            Application.Current.Resuming += Current_Resuming;
+        }
+
+        private async void Current_Resuming(object sender, object e)
+        {
+            if (App.websiteHelper.IsLoggedIn)
+            {
+                try
+                { await App.websiteHelper.GetBalance(); }
+                catch (Exception)
+                {
+                    try { await App.websiteHelper.GetBalance(); }
+                    catch (Exception)
+                    {
+                        try { await App.websiteHelper.GetBalance(); }
+                        catch (Exception)
+                        {
+                            Frame.Navigate(typeof(MainPage));
+                        }
+                    }
+                }
+            }
+            else
+                RefreshCheckPic();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
+            App.websiteHelper = new EcardWebsiteHelper();
             RefreshCheckPic();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
@@ -83,6 +108,7 @@ namespace EcardQuery
                 try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
                 catch (Exception)
                 {
+                    App.websiteHelper = new EcardWebsiteHelper();
                     try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
                     catch (Exception ex)
                     {

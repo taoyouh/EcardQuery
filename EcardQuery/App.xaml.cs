@@ -23,7 +23,7 @@ namespace EcardQuery
     /// </summary>
     sealed partial class App : Application
     {
-        public static EcardWebsiteHelper websiteHelper = new EcardWebsiteHelper();
+        public static EcardWebsiteHelper websiteHelper;
 
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
