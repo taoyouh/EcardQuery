@@ -17,7 +17,7 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalScrollBarVisibility="Auto">
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="150" />
@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="余额：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" />
             <TextBlock x:Name="accountStateBlock" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
-            <GridView x:Name="operationPanel" Grid.Row="1" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None" ItemClick="gridView_ItemClick" Grid.ColumnSpan="2">
+            <GridView x:Name="operationPanel" Grid.Row="1" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None" ItemClick="gridView_ItemClick" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <GridView.Items>
                     <local:OperationItem x:Name="op_historyInquiry" Title="交易历史" Width="200" Height="150">
                         <local:OperationItem.Description>查询历史交易记录，但不能查询今天的交易</local:OperationItem.Description>
@@ -46,5 +46,5 @@
                 </GridView.Items>
             </GridView>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Page>
