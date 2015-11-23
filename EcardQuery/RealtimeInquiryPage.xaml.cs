@@ -46,11 +46,11 @@ namespace EcardQuery
                 {
                     controlPanel.Visibility = Visibility.Collapsed;
                 }
-
+                statusBlock.Text = "";
             }
             catch (Exception ex)
             {
-                statusBlock.Text = ex.Message;
+                statusBlock.Text = "查询失败：" + ex.GetType().ToString() + "\n" + ex.Message;
             }
             progressRing.IsActive = false;
         }

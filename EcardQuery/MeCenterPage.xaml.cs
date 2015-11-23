@@ -43,7 +43,8 @@ namespace EcardQuery
             }
             catch(Exception ex)
             {
-                accountStateBlock.Text = "获取余额失败：\n" + ex.ToString();
+                accountStateBlock.Text = "获取余额失败：" + ex.GetType().ToString()
+                    + "\n" + ex.Message;
             }
         }
 

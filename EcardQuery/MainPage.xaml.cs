@@ -115,7 +115,8 @@ namespace EcardQuery
                     try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
                     catch (Exception ex)
                     {
-                        statusBlock.Text += "获取验证码失败：" + ex.Message;
+                        statusBlock.Text += "获取验证码失败：\n"
+                            + ex.GetType().ToString() + "\n" + ex.Message;
                     }
                 }
             }
@@ -152,7 +153,8 @@ namespace EcardQuery
             }
             catch (Exception ex)
             {
-                statusBlock.Text = "登录失败：" + ex.Message;
+                statusBlock.Text = "登录失败：" + ex.GetType().ToString()
+                     + "\n" + ex.Message;
                 RefreshCheckPic();
             }
             progressRing.IsActive = false;
