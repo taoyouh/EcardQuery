@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="8966ZhaobangChina.61867F1599059" Publisher="CN=584E9342-CAA7-4820-8744-3B371B8C8C66" Version="1.1.6.0" />
+  <Identity Name="8966ZhaobangChina.61867F1599059" Publisher="CN=584E9342-CAA7-4820-8744-3B371B8C8C66" Version="1.1.7.0" />
   <mp:PhoneIdentity PhoneProductId="f78db163-0edb-4bbb-b3bf-ce857549041b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>校园卡查询（上海交通大学）</DisplayName>
