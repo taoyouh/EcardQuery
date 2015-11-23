@@ -63,7 +63,10 @@ namespace EcardQuery
                 }
             }
             else
+            {
+                App.websiteHelper = new EcardWebsiteHelper();
                 RefreshCheckPic();
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
