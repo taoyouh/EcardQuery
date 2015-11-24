@@ -38,42 +38,13 @@ namespace EcardQuery
             {
                 passwdBox.Password = (string)localSettings.Values["passwd"];
             }
-
-            SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
-            Application.Current.Resuming += Current_Resuming;
-        }
-
-        private async void Current_Resuming(object sender, object e)
-        {
-            if (App.websiteHelper.IsLoggedIn)
-            {
-                try
-                { await App.websiteHelper.GetBalance(); }
-                catch (Exception)
-                {
-                    try { await App.websiteHelper.GetBalance(); }
-                    catch (Exception)
-                    {
-                        try { await App.websiteHelper.GetBalance(); }
-                        catch (Exception)
-                        {
-                            Frame.Navigate(typeof(MainPage));
-                        }
-                    }
-                }
-            }
-            else
-            {
-                App.websiteHelper = new EcardWebsiteHelper();
-                RefreshCheckPic();
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            App.websiteHelper = new EcardWebsiteHelper();
+            ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
             RefreshCheckPic();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
@@ -88,31 +59,18 @@ namespace EcardQuery
             base.OnNavigatedFrom(e);
         }
 
-        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            if (Frame.CanGoBack)
-            {
-                Frame.GoBack();
-                e.Handled = true;
-            }
-            else
-            {
-                e.Handled = false;
-            }
-        }
-
         private async void RefreshCheckPic()
         {
             //TODO: 此处应当显示“Loading”的图片
             randImage.Width = 0;
-            try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
+            try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
             catch (Exception)
             {
-                try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
+                try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
                 catch (Exception)
                 {
-                    App.websiteHelper = new EcardWebsiteHelper();
-                    try { randImage.Source = await App.websiteHelper.GetCheckPicAsync(); }
+                    ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
+                    try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
                     catch (Exception ex)
                     {
                         statusBlock.Text += "获取验证码失败：\n"
@@ -146,9 +104,9 @@ namespace EcardQuery
             }
             try
             {
-                await App.websiteHelper.LoginAsync(EcardWebsiteHelper.LoginType.PersonId, userNameBox.Text, passwdBox.Password, randBox.Text);
+                await ((App)(App.Current)).MainWebsiteHelper.LoginAsync(EcardWebsiteHelper.LoginType.PersonId, userNameBox.Text, passwdBox.Password, randBox.Text);
                 statusBlock.Text = "";
-                await App.websiteHelper.HistoryInquiryInit();
+                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquiryInit();
                 Frame.Navigate(typeof(MeCenterPage));
             }
             catch (Exception ex)

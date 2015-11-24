@@ -26,7 +26,7 @@ namespace EcardQuery
         {
             this.InitializeComponent();
 
-            accountPicker.DataContext = App.websiteHelper.HistoryAccountIds;
+            accountPicker.DataContext = ((App)(App.Current)).MainWebsiteHelper.HistoryAccountIds;
             accountPicker.SelectedIndex = 0;
         }
 
@@ -38,7 +38,7 @@ namespace EcardQuery
             progressRing.IsActive = true;
             try
             {
-                dataList = await App.websiteHelper.RealtimeInquire((string)accountPicker.SelectedItem);
+                dataList = await ((App)(App.Current)).MainWebsiteHelper.RealtimeInquire((string)accountPicker.SelectedItem);
                 displayList.DataList = dataList;
                 isShowingData = true;
                 displayList.Visibility = Visibility.Visible;

@@ -39,7 +39,7 @@ namespace EcardQuery
 
             try
             {
-                accountStateBlock.Text = await App.websiteHelper.GetBalance();
+                accountStateBlock.Text = await ((App)(App.Current)).MainWebsiteHelper.GetBalance();
             }
             catch(Exception ex)
             {
