@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using System.IO;
 using Windows.UI.Xaml.Media.Imaging;
 using DBCS;
+using System.Globalization;
 
 namespace EcardQuery
 {
-    public class EcardWebsiteHelper
+    public class EcardWebsiteHelper : IDisposable
     {
-        CookieContainer cookieContainer = new CookieContainer();
         HttpClient httpClient = new HttpClient();
         Task<HttpResponseMessage> initGetResult;
 
@@ -26,6 +26,8 @@ namespace EcardQuery
                 return isLoggedIn;
             }
         }
+
+      
 
         public EcardWebsiteHelper()
         {
@@ -168,9 +170,9 @@ namespace EcardQuery
         /// <param name="endDate">查询结束日期</param>
         /// <param name="accountId">要查询的账户名</param>
         /// <returns></returns>
-        public async Task<List<TranscationData>> HistoryInquire(string startDate, string endDate,string accountId)
+        public async Task HistoryInquire(string startDate, string endDate,string accountId, ICollection<TranscationData> datas)
         {
-            List<TranscationData> datas = new List<TranscationData>();
+            datas.Clear();
 
             if (historyContinueUrl == null)
                 throw new InvalidOperationException("查询未初始化");
@@ -198,8 +200,6 @@ namespace EcardQuery
                 string s3 = await GetResponseContentStringAsync(response3);
                 History_ParseDatas(datas, s3);
             }
-
-            return datas;
         }
 
         #region 交易历史查询中的私有函数
@@ -223,13 +223,13 @@ namespace EcardQuery
             return contunieUrl1;
         }
 
-        private static void History_ParseDatas(List<TranscationData> datas, string s)
+        private static void History_ParseDatas(ICollection<TranscationData> datas, string s)
         {
             int index1, index2;
             while (true)
             {
-                index1 = s.IndexOf("<tr class=\"listbg\">");
-                index2 = s.IndexOf("<tr class=\"listbg2\">");
+                index1 = s.IndexOf("<tr class=\"listbg\">", StringComparison.OrdinalIgnoreCase);
+                index2 = s.IndexOf("<tr class=\"listbg2\">", StringComparison.OrdinalIgnoreCase);
                 if (index1 >= 0)
                 {
                     if (index2 >= 0)
@@ -244,7 +244,7 @@ namespace EcardQuery
                     else
                         break;
                 }
-                datas.Add(History_ParseDataLine(s.Substring(0, s.IndexOf("</tr>"))));
+                datas.Add(History_ParseDataLine(s.Substring(0, s.IndexOf("</tr>", StringComparison.OrdinalIgnoreCase))));
             }
         }
 
@@ -252,22 +252,28 @@ namespace EcardQuery
         {
             TranscationData data = new TranscationData();
 
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Time = DateTime.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.TranscationType = content.Substring(0, content.IndexOf("</td>"));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.SubSystem = content.Substring(0, content.IndexOf("</td>"));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Delta = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.AccountBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.CardBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Id = int.Parse(content.Substring(0, content.IndexOf("</td>")));
+            ParseDataLine_GoNext(ref content);
+            data.Time = DateTime.Parse
+                                (content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            ParseDataLine_GoNext(ref content);
+            ParseDataLine_GoNext(ref content);
+            data.TranscationType = content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
+            ParseDataLine_GoNext(ref content);
+            data.SubSystem = content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
+            ParseDataLine_GoNext(ref content);
+            data.Delta = decimal.Parse(content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.AccountBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.CardBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.Id = int.Parse(content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
             return data;
         }
         #endregion
@@ -277,9 +283,9 @@ namespace EcardQuery
         /// </summary>
         /// <param name="accountId">要查询的账户名</param>
         /// <returns></returns>
-        public async Task<List<TranscationData>> RealtimeInquire(string accountId)
+        public async Task RealtimeInquire(string accountId, ICollection<TranscationData> datas)
         {
-            List<TranscationData> datas = new List<TranscationData>();
+            datas.Clear();
             HttpResponseMessage response = await httpClient.PostAsync("/accounttodatTrjnObject.action", new StringContent("account =" + accountId + "&inputObject=all&Submit=+%C8%B7+%B6%A8+", Encoding.ASCII, "application/x-www-form-urlencoded"));
             response.EnsureSuccessStatusCode();
             string s = await GetResponseContentStringAsync(response);
@@ -289,18 +295,16 @@ namespace EcardQuery
             string pageCountStr = s.Substring(0, s.IndexOf("页"));
             pageCountStr = pageCountStr.Substring(pageCountStr.LastIndexOf("共") + 1);
             int pageCount = int.Parse(pageCountStr);
-
-            return datas;
         }
 
         #region 实时查询中的私有函数
-        private static void RealTime_ParseDatas(List<TranscationData> datas, string s)
+        private static void RealTime_ParseDatas(ICollection<TranscationData> datas, string s)
         {
             int index1, index2;
             while (true)
             {
-                index1 = s.IndexOf("<tr class=\"listbg\">");
-                index2 = s.IndexOf("<tr class=\"listbg2\">");
+                index1 = s.IndexOf("<tr class=\"listbg\">", StringComparison.OrdinalIgnoreCase);
+                index2 = s.IndexOf("<tr class=\"listbg2\">", StringComparison.OrdinalIgnoreCase);
                 if (index1 >= 0)
                 {
                     if (index2 >= 0)
@@ -315,7 +319,7 @@ namespace EcardQuery
                     else
                         break;
                 }
-                datas.Add(RealTime_ParseDataLine(s.Substring(0, s.IndexOf("</tr>"))));
+                datas.Add(RealTime_ParseDataLine(s.Substring(0, s.IndexOf("</tr>", StringComparison.OrdinalIgnoreCase))));
             }
         }
 
@@ -323,26 +327,45 @@ namespace EcardQuery
         {
             TranscationData data = new TranscationData();
 
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Time = DateTime.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.TranscationType = content.Substring(0, content.IndexOf("</td>"));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.SubSystem = content.Substring(0, content.IndexOf("</td>"));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Delta = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.AccountBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.CardBalance = decimal.Parse(content.Substring(0, content.IndexOf("</td>")));
-            content = content.Substring(content.IndexOf(">", content.IndexOf("<td") + 1) + 1);
-            data.Id = int.Parse(content.Substring(0, content.IndexOf("</td>")));
+            ParseDataLine_GoNext(ref content);
+            data.Time = DateTime.Parse(content.Substring(0, 
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            ParseDataLine_GoNext(ref content);
+            ParseDataLine_GoNext(ref content);
+            data.TranscationType = content.Substring(0, 
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
+            ParseDataLine_GoNext(ref content);
+            data.SubSystem = content.Substring(0,
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
+            ParseDataLine_GoNext(ref content);
+            ParseDataLine_GoNext(ref content);
+            data.Delta = decimal.Parse(content.Substring(0, 
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.AccountBalance = decimal.Parse
+                (content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.CardBalance = decimal.Parse(content.Substring(0, 
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
+            ParseDataLine_GoNext(ref content);
+            data.Id = int.Parse(content.Substring(0, 
+                content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
+                CultureInfo.InvariantCulture);
             return data;
         }
         #endregion
+
+        private static void ParseDataLine_GoNext(ref string content)
+        {
+            content = content.Substring(content.IndexOf
+                (">", content.IndexOf("<td", StringComparison.OrdinalIgnoreCase) + 1,
+                StringComparison.OrdinalIgnoreCase) + 1);
+        }
 
         private async Task<string> GetResponseContentStringAsync(HttpResponseMessage response)
         {
@@ -350,7 +373,10 @@ namespace EcardQuery
             return (await DBCSEncoding.GetDBCSEncoding("GB2312")).GetString(responseData);
         }
 
-        
+        public void Dispose()
+        {
+            ((IDisposable)httpClient).Dispose();
+        }
     }
 
     public class TranscationData

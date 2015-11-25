@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,7 +31,7 @@ namespace EcardQuery
             accountPicker.SelectedIndex = 0;
         }
 
-        public static List<TranscationData> dataList;
+        ObservableCollection<TranscationData> dataList = new ObservableCollection<TranscationData>();
         bool isShowingData = false;
 
         private async void submitButton_Click(object sender, RoutedEventArgs e)
@@ -38,7 +39,7 @@ namespace EcardQuery
             progressRing.IsActive = true;
             try
             {
-                dataList = await ((App)(App.Current)).MainWebsiteHelper.RealtimeInquire((string)accountPicker.SelectedItem);
+                await ((App)(App.Current)).MainWebsiteHelper.RealtimeInquire((string)accountPicker.SelectedItem, dataList);
                 displayList.DataList = dataList;
                 isShowingData = true;
                 displayList.Visibility = Visibility.Visible;
@@ -57,14 +58,15 @@ namespace EcardQuery
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (isShowingData && controlPanel.Visibility == Visibility.Collapsed && e.NavigationMode == NavigationMode.Back)
-            {
-                e.Cancel = true;
-                controlPanel.Visibility = Visibility.Visible;
-                displayList.Visibility = Visibility.Collapsed;
-                isShowingData = false;
-                return;
-            }
+            if (e != null)
+                if (isShowingData && controlPanel.Visibility == Visibility.Collapsed && e.NavigationMode == NavigationMode.Back)
+                {
+                    e.Cancel = true;
+                    controlPanel.Visibility = Visibility.Visible;
+                    displayList.Visibility = Visibility.Collapsed;
+                    isShowingData = false;
+                    return;
+                }
             base.OnNavigatingFrom(e);
         }
 
