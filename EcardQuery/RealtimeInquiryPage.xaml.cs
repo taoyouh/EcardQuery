@@ -37,6 +37,8 @@ namespace EcardQuery
         private async void submitButton_Click(object sender, RoutedEventArgs e)
         {
             progressRing.IsActive = true;
+            controlPanel.IsHitTestVisible = false;
+            controlPanel.Opacity = 0.5;
             try
             {
                 await ((App)(App.Current)).MainWebsiteHelper.RealtimeInquire((string)accountPicker.SelectedItem, dataList);
@@ -54,6 +56,8 @@ namespace EcardQuery
                 statusBlock.Text = "查询失败：" + ex.GetType().ToString() + "\n" + ex.Message;
             }
             progressRing.IsActive = false;
+            controlPanel.IsHitTestVisible = true;
+            controlPanel.Opacity = 1;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

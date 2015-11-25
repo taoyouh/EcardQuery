@@ -51,6 +51,8 @@ namespace EcardQuery
         private async System.Threading.Tasks.Task InquireHistoryAsync(string startDate, string endDate)
         {
             progressRing.IsActive = true;
+            controlPanel.IsHitTestVisible = false;
+            controlPanel.Opacity = 0.5;
             try
             {
                  await ((App)(App.Current)).MainWebsiteHelper.HistoryInquire
@@ -69,6 +71,8 @@ namespace EcardQuery
                 statusBlock.Text = "查询失败：" + ex.GetType().ToString() + "\n" + ex.Message;
             }
             progressRing.IsActive = false;
+            controlPanel.IsHitTestVisible = true;
+            controlPanel.Opacity = 1;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
