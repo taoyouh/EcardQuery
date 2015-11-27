@@ -10,16 +10,18 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <local:ColorConverter x:Key="ColorValueConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView x:Name="displayList" ItemsSource="{Binding}" >
+        <ListView x:Name="displayList" ItemsSource="{Binding}" HorizontalAlignment="Center" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Rectangle Width="40000" Grid.ColumnSpan="2" />
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" Height="40" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width ="Auto" />
@@ -28,7 +30,8 @@
                             <Rectangle Width="400" Grid.ColumnSpan="2" />
                             <TextBlock Text="{Binding Time}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,3,0,0" FontSize="16" />
                             <TextBlock Text="{Binding SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" />
-                            <TextBlock Text="{Binding Delta}" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontSize="20" Margin="0" Grid.Column="1" />
+                            <TextBlock Text="{Binding Delta}" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontSize="20" Margin="0" Grid.Column="1" 
+                                       Foreground="{Binding Delta, Converter={StaticResource ResourceKey=ColorValueConverter}}"/>
                             <TextBlock Text="{Binding AccountBalance}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="11" Grid.Column="1" />
                         </Grid>
                     </Grid>

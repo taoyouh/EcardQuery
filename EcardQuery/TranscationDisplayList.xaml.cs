@@ -40,4 +40,25 @@ namespace EcardQuery
             }
         }
     }
+
+    public class ColorConverter : Windows.UI.Xaml.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            decimal num = (decimal)value;
+            if(num>0)
+            {
+                return new SolidColorBrush(Windows.UI.Colors.Red);
+            }
+            else
+            {
+                return new SolidColorBrush(Windows.UI.Colors.Green);
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
