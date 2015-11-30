@@ -21,18 +21,22 @@
         <ListView x:Name="displayList" ItemsSource="{Binding}" HorizontalAlignment="Center" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="0,2">
                         <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" Height="40" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width ="Auto" />
                                 <ColumnDefinition Width ="*" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Rectangle Width="400" Grid.ColumnSpan="2" />
-                            <TextBlock Text="{Binding Time}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,3,0,0" FontSize="16" />
-                            <TextBlock Text="{Binding SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" />
+                            <TextBlock Text="{Binding Time}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" FontSize="20" />
+                            <TextBlock Text="{Binding SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="11" Grid.Row="1" />
                             <TextBlock Text="{Binding Delta}" HorizontalAlignment="Right" VerticalAlignment="Stretch" FontSize="20" Margin="0" Grid.Column="1" 
                                        Foreground="{Binding Delta, Converter={StaticResource ResourceKey=ColorValueConverter}}"/>
-                            <TextBlock Text="{Binding AccountBalance}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="11" Grid.Column="1" />
+                            <TextBlock Text="{Binding AccountBalance}" VerticalAlignment="Stretch" HorizontalAlignment="Right" FontSize="11" Grid.Column="1" Grid.Row="1" />
                         </Grid>
                     </Grid>
                 </DataTemplate>
