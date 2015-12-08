@@ -279,7 +279,7 @@ namespace EcardQuery
         #endregion
 
         /// <summary>
-        /// 查询当日交易流水，不能超过16条。
+        /// 查询当日交易流水。
         /// </summary>
         /// <param name="accountId">要查询的账户名</param>
         /// <returns></returns>
@@ -295,6 +295,16 @@ namespace EcardQuery
             string pageCountStr = s.Substring(0, s.IndexOf("页"));
             pageCountStr = pageCountStr.Substring(pageCountStr.LastIndexOf("共") + 1);
             int pageCount = int.Parse(pageCountStr);
+
+            int i;
+            string continueUrl = "/accounttodatTrjnObject.action";
+            for (i = 2; i <= pageCount; i++)
+            {
+                HttpResponseMessage response3 = await httpClient.PostAsync(continueUrl, new StringContent("account =" + accountId + "&inputObject=all&pageVo.pageNum=" + i.ToString(), Encoding.ASCII, "application/x-www-form-urlencoded"));
+                response3.EnsureSuccessStatusCode();
+                string s3 = await GetResponseContentStringAsync(response3);
+                RealTime_ParseDatas(datas, s3);
+            }
         }
 
         #region 实时查询中的私有函数

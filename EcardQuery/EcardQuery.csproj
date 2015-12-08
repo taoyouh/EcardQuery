@@ -127,6 +127,7 @@
     <Content Include="DataHelperLib\Maps\gb2312.bin" />
     <None Include="EcardQuery_StoreKey.pfx" />
     <None Include="project.json" />
+    <None Include="README.md" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
