@@ -1,1 +1,1 @@
-C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.7.0\EcardQuery_1.1.7.0_x86_x64_arm.appxbundle
+C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.8.0\EcardQuery_1.1.8.0_x86_x64_arm.appxbundle
