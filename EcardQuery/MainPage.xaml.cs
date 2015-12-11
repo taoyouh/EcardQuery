@@ -27,22 +27,27 @@ namespace EcardQuery
         public MainPage()
         {
             this.InitializeComponent();
-
-            Windows.Storage.ApplicationDataContainer localSettings =
-                Windows.Storage.ApplicationData.Current.LocalSettings;
-            if(localSettings.Values.ContainsKey("userName"))
-            {
-                userNameBox.Text = (string)localSettings.Values["userName"];
-            }
-            if(localSettings.Values.ContainsKey("passwd"))
-            {
-                passwdBox.Password = (string)localSettings.Values["passwd"];
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            Windows.Storage.ApplicationDataContainer localSettings =
+                Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (localSettings.Values.ContainsKey("userName") && localSettings.Values.ContainsKey("passwd"))
+            {
+                userNameBox.Text = (string)localSettings.Values["userName"];
+                passwdBox.Password = (string)localSettings.Values["passwd"];
+                forgetMeButton.Visibility = Visibility.Visible;
+                rememberMeCheckBox.Visibility = Visibility.Collapsed;
+                rememberMeCheckBox.IsChecked = false;
+            }
+            else
+            {
+                forgetMeButton.Visibility = Visibility.Collapsed;
+                rememberMeCheckBox.Visibility = Visibility.Visible;
+            }
 
             ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
             RefreshCheckPic();
@@ -62,6 +67,7 @@ namespace EcardQuery
         private async void RefreshCheckPic()
         {
             //TODO: 此处应当显示“Loading”的图片
+            randLoadingHint.Visibility = Visibility.Visible;
             randImage.Width = 0;
             try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
             catch (Exception)
@@ -75,8 +81,13 @@ namespace EcardQuery
                     {
                         statusBlock.Text += "获取验证码失败：\n"
                             + ex.GetType().ToString() + "\n" + ex.Message;
+                        randResetButton.Visibility = Visibility.Visible;
                     }
                 }
+            }
+            finally
+            {
+                randLoadingHint.Visibility = Visibility.Collapsed;
             }
             randImage.Height = randBox.ActualHeight;
             randImage.Width = double.NaN;
@@ -136,6 +147,34 @@ namespace EcardQuery
             {
                 await LoginAsync();
             }
+        }
+
+        private void userNameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            forgetMeButton.Visibility = Visibility.Collapsed;
+            rememberMeCheckBox.Visibility = Visibility.Visible;
+        }
+
+        private void passwdBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            forgetMeButton.Visibility = Visibility.Collapsed;
+            rememberMeCheckBox.Visibility = Visibility.Visible;
+        }
+
+        private void randResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            randResetButton.Visibility = Visibility.Collapsed;
+            RefreshCheckPic();
+        }
+
+        private void forgetMeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.Storage.ApplicationDataContainer localSettings =
+                Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettings.Values.Remove("userName");
+            localSettings.Values.Remove("passwd");
+            userNameBox.Text = "";
+            passwdBox.Password = "";
         }
     }
 }
