@@ -30,6 +30,7 @@ namespace EcardQuery
         public App()
         {
 #if DEBUG
+#else
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session |
