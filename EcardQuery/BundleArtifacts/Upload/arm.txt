@@ -1,5 +1,5 @@
-MainPackage=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\bin\ARM\Release\Upload\EcardQuery_1.1.9.0_ARM.appx
-SymbolPackage=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.9.0\EcardQuery_1.1.9.0_ARM.appxsym
+MainPackage=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\bin\ARM\Release\Upload\EcardQuery_1.1.10.0_ARM.appx
+SymbolPackage=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.1.10.0\EcardQuery_1.1.10.0_ARM.appxsym
 ResourcePack=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\_scale-100.appx
 ResourcePack=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\_scale-125.appx
 ResourcePack=C:\Users\Zhaoquan\Documents\Visual Studio 2015\Git\EcardQuery\EcardQuery\_scale-150.appx
