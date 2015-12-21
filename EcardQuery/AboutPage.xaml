@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="EcardQuery.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EcardQuery"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <DrillInNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid >
+            <TextBlock x:Name="TitleBlock" TextWrapping="WrapWholeWords" Text="关于" VerticalAlignment="Top" FontSize="{ThemeResource HubHeaderThemeFontSize}" Margin="12"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1" >
+            <Grid Margin="6,6,6,0" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="AppTitleBlock" TextWrapping="WrapWholeWords" Text="校园卡查询（上海交通大学）" FontSize="{ThemeResource TextStyleExtraLargeFontSize}" Margin="6" Grid.ColumnSpan="2" />
+
+                <TextBlock Text="版本" Margin="6" Grid.Row="1"/>
+                <TextBlock x:Name="VersionBlock" Text="0.0.0.0" Margin="6" Grid.Row="1" Grid.Column="1" TextWrapping="WrapWholeWords"/>
+
+                <TextBlock Text="开发商" Grid.Row="2" Margin="6" />
+                <TextBlock Text="兆邦中国" Grid.Row="2" Grid.Column="1" Margin="6" TextWrapping="WrapWholeWords" />
+
+                <TextBlock Text="反馈邮箱" Margin="6" Grid.Row="3"/>
+                <HyperlinkButton x:Name="emailButton" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Margin="6,0" Click="emailButton_Click">
+                    <TextBlock Text="zhaobang.china@hotmail.com" TextWrapping="Wrap" />
+                </HyperlinkButton>
+
+                <TextBlock Text="所有数据来自http://ecard.sjtu.edu.cn/，本程序对数据准确性不作任何保证。" Grid.Row="4" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+
+                <TextBlock Text="开源软件声明：GB2312解码器Encoding for Silverlight版权归Aimeast所有。" Grid.Row="5" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+                <HyperlinkButton x:Name="liscenseButton_DBCS" Grid.Row="6" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_DBCS_Click">
+                    <TextBlock Text="Encoding for Silverlight协议" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton x:Name="sourceCodeButton_DBCS" Grid.Row="7" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_DBCS_Click" >
+                    <TextBlock Text="原项目地址：https://github.com/Aimeast/Encoding4Silverlight" TextWrapping="Wrap" />
+                </HyperlinkButton>
+
+                <TextBlock Text="开源软件声明本程序使用Application Insights进行运行状况分析，Application Insights版权归Microsoft Corporation所有" Grid.Row="8" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+                <HyperlinkButton x:Name="liscenseButton_AppInsights" Grid.Row="9" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_AppInsights_Click">
+                    <TextBlock Text="Application Insights协议" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton x:Name="sourceCodeButton_AppInsights" Grid.Row="10" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_AppInsights_Click" >
+                    <TextBlock Text="原项目地址：https://github.com/Microsoft/ApplicationInsights-Home" TextWrapping="Wrap" />
+                </HyperlinkButton>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

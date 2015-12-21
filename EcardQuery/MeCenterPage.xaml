@@ -40,6 +40,9 @@
                     <local:OperationItem x:Name="op_logout" Title="注销" Width="200" Height="150">
                         <local:OperationItem.Description>注销当前用户</local:OperationItem.Description>
                     </local:OperationItem>
+                    <local:OperationItem x:Name="op_about" Title="关于" Width="200" Height="150">
+                        <local:OperationItem.Description>包括开源软件协议</local:OperationItem.Description>
+                    </local:OperationItem>
                     <!--<Button x:Name="historyInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="交易历史查询" Click="historyInquiryButton_Click" MinWidth="150" MinHeight="40" />
                     <Button x:Name="realTimeInquiryButton" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" Content="当日交易查询" Grid.Column="1" Click="realTimeInquiryButton_Click" />
                     <Button x:Name="logoutButton" Margin="8" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="注销" Click="logoutButton_Click" Grid.Column="2" />-->
