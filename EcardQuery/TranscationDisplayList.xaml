@@ -41,8 +41,11 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.Footer>
+                <ProgressRing x:Name="progressRing" Width="50" Height="50" IsActive="False" />
+            </ListView.Footer>
         </ListView>
-        <TextBlock x:Name="noDataHint" Text="没有查询到任何的数据" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{ThemeResource TextStyleLargeFontSize}" Visibility="Collapsed" />
+        <TextBlock x:Name="noDataHint" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{ThemeResource TextStyleLargeFontSize}" />
         <ad:AdControl ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" 
                       AdUnitId="11554044" 
                       HorizontalAlignment="Center" 

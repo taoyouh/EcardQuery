@@ -26,18 +26,20 @@ namespace EcardQuery
 
         public IEnumerable<object> DataList
         {
-            get
-            {
-                return displayList.DataContext as IEnumerable<object>;
-            }
-            set
-            {
-                displayList.DataContext = value;
-                if (value.Count() > 0)
-                    noDataHint.Visibility = Visibility.Collapsed;
-                else
-                    noDataHint.Visibility = Visibility.Visible;
-            }
+            get { return displayList.DataContext as IEnumerable<object>; }
+            set { displayList.DataContext = value; }
+        }
+
+        public string Hint
+        {
+            get { return noDataHint.Text; }
+            set { noDataHint.Text = value; }
+        }
+
+        public bool IsLoading
+        {
+            get { return progressRing.IsActive; }
+            set { progressRing.IsActive = value; }
         }
     }
 

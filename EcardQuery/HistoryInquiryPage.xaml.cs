@@ -31,6 +31,8 @@ namespace EcardQuery
             this.InitializeComponent();
             accountPicker.DataContext = ((App)(App.Current)).MainWebsiteHelper.HistoryAccountIds;
             accountPicker.SelectedIndex = 0;
+
+            displayList.DataList = dataList;
         }
 
         private async void submitButton_Click(object sender, RoutedEventArgs e)
@@ -50,29 +52,46 @@ namespace EcardQuery
 
         private async System.Threading.Tasks.Task InquireHistoryAsync(string startDate, string endDate)
         {
-            progressRing.IsActive = true;
-            controlPanel.IsHitTestVisible = false;
-            controlPanel.Opacity = 0.5;
+            //progressRing.IsActive = true;
+            //controlPanel.IsHitTestVisible = false;
+            //controlPanel.Opacity = 0.5;
             try
             {
-                 await ((App)(App.Current)).MainWebsiteHelper.HistoryInquire
-                    (startDate, endDate, (string)accountPicker.SelectedItem, dataList);
+                //初始化结果面板
+                displayList.Hint = "";
+                displayList.IsLoading = true;
+                dataList = new ObservableCollection<TranscationData>();
                 displayList.DataList = dataList;
+
+                //显示结果面板
                 isShowingData = true;
                 displayList.Visibility = Visibility.Visible;
                 if (ActualWidth < 600)
                 {
                     controlPanel.Visibility = Visibility.Collapsed;
                 }
-                statusBlock.Text = "";
+
+                //开始查找
+                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquire
+                    (startDate, endDate, (string)accountPicker.SelectedItem, dataList);
+
+                //显示查找结果
+                if(dataList.Count==0 && !displayList.IsLoading)
+                {
+                    displayList.Hint = "没有查询到任何的数据";
+                }
             }
             catch (Exception ex)
             {
-                statusBlock.Text = "查询失败：" + ex.GetType().ToString() + "\n" + ex.Message;
+                displayList.Hint = "查询失败：" + ex.GetType().ToString() + "\n" + ex.Message;
             }
-            progressRing.IsActive = false;
-            controlPanel.IsHitTestVisible = true;
-            controlPanel.Opacity = 1;
+            finally
+            {
+                displayList.IsLoading = false;
+            }
+            //progressRing.IsActive = false;
+            //controlPanel.IsHitTestVisible = true;
+            //controlPanel.Opacity = 1;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

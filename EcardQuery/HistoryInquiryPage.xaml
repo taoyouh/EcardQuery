@@ -64,6 +64,5 @@
             <ad:AdControl Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" AdUnitId="11554055" ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" Width="300" Height="250" HorizontalAlignment="Center" />
         </Grid>
         <local:TranscationDisplayList x:Name="displayList" Grid.Column="1" Visibility="Collapsed" />
-        <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>
