@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +34,18 @@ namespace EcardQuery
             accountPicker.SelectedIndex = 0;
 
             displayList.DataList = dataList;
+
+            startDatePicker.Date = DateTime.Today - TimeSpan.FromDays(3);
+            endDatePicker.Date = DateTime.Today - TimeSpan.FromDays(1);
+            startDatePicker.MaxDate = DateTime.Today - TimeSpan.FromDays(1);
+            endDatePicker.MaxDate = DateTime.Today - TimeSpan.FromDays(1);
+            Application.Current.Resuming += Current_Resuming;
+        }
+
+        private void Current_Resuming(object sender, object e)
+        {
+            startDatePicker.MaxDate = DateTime.Today - TimeSpan.FromDays(1);
+            endDatePicker.MaxDate = DateTime.Today - TimeSpan.FromDays(1);
         }
 
         private async void submitButton_Click(object sender, RoutedEventArgs e)
@@ -46,7 +59,8 @@ namespace EcardQuery
             }
             else
             {
-                statusBlock.Text = "必须输入开始日期和结束日期。";
+                MessageDialog msgDialog = new MessageDialog("必须选择开始日期和结束日期", "未完成");
+                await msgDialog.ShowAsync();
             }
         }
 
@@ -139,5 +153,6 @@ namespace EcardQuery
 
             await InquireHistoryAsync(startDate, endDate);
         }
+
     }
 }
