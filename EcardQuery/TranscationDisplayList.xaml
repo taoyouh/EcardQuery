@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ad="using:Microsoft.Advertising.WinRT.UI"
+    xmlns:wuxdata="using:Windows.UI.Xaml.Data"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -13,49 +14,59 @@
     <UserControl.Resources>
         <CollectionViewSource x:Name="cvs1" IsSourceGrouped="True" />
         <local:ColorConverter x:Key="ColorValueConverter"/>
+        
+        <DataTemplate x:Key="TranscationDisplayItemTemplate" x:DataType="local:TranscationData">
+            <Grid Margin="0,2">
+                <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width ="Auto" />
+                        <ColumnDefinition Width ="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Rectangle Width="400" Grid.ColumnSpan="2" />
+                    <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20" />
+                    <TextBlock Text="{x:Bind SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="11" Grid.Row="1" />
+                    <TextBlock Text="{x:Bind Delta}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Grid.Column="1" 
+                                       Foreground="{x:Bind Delta, Converter={StaticResource ResourceKey=ColorValueConverter}}" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Bind AccountBalance}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="11" Grid.Column="1" Grid.Row="1" TextAlignment="Right" />
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GroupHeaderTemplate" x:DataType="local:TranscationGroup">
+            <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
+            <TextBlock Text="{x:Bind Group.(local:TranscationGroup.Key)}" Style="{StaticResource SubtitleTextBlockStyle}" 
+                       TextWrapping="Wrap" HorizontalAlignment="Center"/>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView x:Name="displayList" ItemsSource="{x:Bind cvs1.View}"  HorizontalAlignment="Center">
-            <ListView.GroupStyle>
-                <GroupStyle >
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate x:DataType="local:TranscationGroup">
-                            <TextBlock Text="{x:Bind Key}" 
-                                       Style="{ThemeResource TitleTextBlockStyle}"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:TranscationData">
-                    <Grid Margin="0,2">
-                        <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width ="Auto" />
-                                <ColumnDefinition Width ="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Rectangle Width="400" Grid.ColumnSpan="2" />
-                            <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="20" />
-                            <TextBlock Text="{x:Bind SubSystem}" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="11" Grid.Row="1" />
-                            <TextBlock Text="{x:Bind Delta}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Grid.Column="1" 
-                                       Foreground="{x:Bind Delta, Converter={StaticResource ResourceKey=ColorValueConverter}}" TextAlignment="Right"/>
-                            <TextBlock Text="{x:Bind AccountBalance}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="11" Grid.Column="1" Grid.Row="1" TextAlignment="Right" />
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.Footer>
-                <ProgressRing x:Name="progressRing" Width="50" Height="50" IsActive="False" />
-            </ListView.Footer>
-        </ListView>
+
+        <SemanticZoom HorizontalAlignment="Center" MaxWidth="400">
+            <SemanticZoom.ZoomedInView>
+                <ListView x:Name="displayList" ItemsSource="{x:Bind cvs1.View}"  
+                          ItemTemplate="{StaticResource TranscationDisplayItemTemplate}" >
+                    <ListView.GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource GroupHeaderTemplate}" />
+                    </ListView.GroupStyle>
+                    <ListView.Footer>
+                        <ProgressRing x:Name="progressRing" Width="50" Height="50" IsActive="False" />
+                    </ListView.Footer>
+                </ListView>
+            </SemanticZoom.ZoomedInView>
+            <SemanticZoom.ZoomedOutView>
+                <ListView ItemsSource="{x:Bind cvs1.View.CollectionGroups}" SelectionMode="None" ItemTemplate="{StaticResource ZoomedOutTemplate}" />
+            </SemanticZoom.ZoomedOutView>
+        </SemanticZoom>
         <TextBlock x:Name="noDataHint" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{ThemeResource TextStyleLargeFontSize}" />
         <ad:AdControl ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" 
                       AdUnitId="11554044" 
