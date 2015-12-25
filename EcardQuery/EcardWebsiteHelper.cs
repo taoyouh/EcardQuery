@@ -27,7 +27,7 @@ namespace EcardQuery
             }
         }
 
-      
+
 
         public EcardWebsiteHelper()
         {
@@ -54,7 +54,7 @@ namespace EcardQuery
             return bitmap;
         }
 
-        public enum LoginType { CardId = 1, PersonId = 2};
+        public enum LoginType { CardId = 1, PersonId = 2 };
 
         /// <summary>
         /// 登录系统
@@ -67,7 +67,7 @@ namespace EcardQuery
         public async Task LoginAsync(LoginType loginType, string name, string passwd, string rand)
         {
             string postString = "imageField.x=0&imageField.y=0"
-                + "&loginType=" + ((int)loginType).ToString() + "&name=" + name 
+                + "&loginType=" + ((int)loginType).ToString() + "&name=" + name
                 + "&passwd=" + passwd + "&rand=" + rand + "&userType=1";//这里即为传递的参数，可以用工具抓包分析，也可以自己分析，主要是form里面每一个name都要加进来  
             string url = "/loginstudent.action";//地址  
 
@@ -79,7 +79,7 @@ namespace EcardQuery
             title = title.Substring(0, title.IndexOf("<"));
             string content = "";
             int index;
-            while((index = s.IndexOf("<p"))>=0)
+            while ((index = s.IndexOf("<p")) >= 0)
             {
                 s = s.Substring(index);
                 s = s.Substring(s.IndexOf(">") + 1);
@@ -87,11 +87,11 @@ namespace EcardQuery
                 content += " ";
             }
 
-            if (content.IndexOf("验证码")>=0)
+            if (content.IndexOf("验证码") >= 0)
             {
                 throw new ArgumentException(content, "rand");
             }
-            if (content.IndexOf("密码")>=0)
+            if (content.IndexOf("密码") >= 0)
             {
                 throw new ArgumentException(content, "passwd");
             }
@@ -170,7 +170,7 @@ namespace EcardQuery
         /// <param name="endDate">查询结束日期</param>
         /// <param name="accountId">要查询的账户名</param>
         /// <returns></returns>
-        public async Task HistoryInquire(string startDate, string endDate,string accountId, ICollection<TranscationData> datas)
+        public async Task HistoryInquire(string startDate, string endDate, string accountId, ICollection<TranscationData> datas)
         {
             datas.Clear();
 
@@ -253,7 +253,7 @@ namespace EcardQuery
             TranscationData data = new TranscationData();
 
             ParseDataLine_GoNext(ref content);
-            data.Time = DateTime.Parse
+            data.DateTime = DateTime.Parse
                                 (content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                                 CultureInfo.InvariantCulture);
             ParseDataLine_GoNext(ref content);
@@ -338,20 +338,20 @@ namespace EcardQuery
             TranscationData data = new TranscationData();
 
             ParseDataLine_GoNext(ref content);
-            data.Time = DateTime.Parse(content.Substring(0, 
+            data.DateTime = DateTime.Parse(content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                 CultureInfo.InvariantCulture);
             ParseDataLine_GoNext(ref content);
             ParseDataLine_GoNext(ref content);
             ParseDataLine_GoNext(ref content);
-            data.TranscationType = content.Substring(0, 
+            data.TranscationType = content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
             ParseDataLine_GoNext(ref content);
             data.SubSystem = content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase));
             ParseDataLine_GoNext(ref content);
             ParseDataLine_GoNext(ref content);
-            data.Delta = decimal.Parse(content.Substring(0, 
+            data.Delta = decimal.Parse(content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                 CultureInfo.InvariantCulture);
             ParseDataLine_GoNext(ref content);
@@ -359,11 +359,11 @@ namespace EcardQuery
                 (content.Substring(0, content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                 CultureInfo.InvariantCulture);
             ParseDataLine_GoNext(ref content);
-            data.CardBalance = decimal.Parse(content.Substring(0, 
+            data.CardBalance = decimal.Parse(content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                 CultureInfo.InvariantCulture);
             ParseDataLine_GoNext(ref content);
-            data.Id = int.Parse(content.Substring(0, 
+            data.Id = int.Parse(content.Substring(0,
                 content.IndexOf("</td>", StringComparison.OrdinalIgnoreCase)),
                 CultureInfo.InvariantCulture);
             return data;
@@ -391,7 +391,9 @@ namespace EcardQuery
 
     public class TranscationData
     {
-        public DateTime Time { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime Date { get { return DateTime.Date; } }
+        public TimeSpan Time { get { return DateTime.TimeOfDay; } }
         public string TranscationType { get; set; }
         public string SubSystem { get; set; }
         public decimal Delta { get; set; }

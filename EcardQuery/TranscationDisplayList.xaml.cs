@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,15 +20,64 @@ namespace EcardQuery
 {
     public sealed partial class TranscationDisplayList : UserControl
     {
+        private ObservableCollection<TranscationGroup> _groupedDataList = new ObservableCollection<TranscationGroup>();
         public TranscationDisplayList()
         {
             this.InitializeComponent();
+            cvs1.Source = _groupedDataList;
         }
 
-        public IEnumerable<object> DataList
+        private ObservableCollection<TranscationData> _dataList = new ObservableCollection<TranscationData>();
+        public ObservableCollection<TranscationData> DataList
         {
-            get { return displayList.DataContext as IEnumerable<object>; }
-            set { displayList.DataContext = value; }
+            get { return _dataList; }
+            set
+            {
+                _dataList.CollectionChanged -= DataList_CollectionChanged;
+                _dataList = value;
+                _dataList.CollectionChanged += DataList_CollectionChanged;
+                GetGroupsByDate(_dataList, _groupedDataList);
+            }
+        }
+
+        private void DataList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(e.Action==System.Collections.Specialized.NotifyCollectionChangedAction.Reset)
+            {
+                GetGroupsByDate(_dataList, _groupedDataList);
+                return;
+            }
+
+
+            if (e.OldItems != null)
+                foreach (TranscationData item in e.OldItems)
+                {
+                    TranscationGroup group = _groupedDataList.First(x => x.Key == item.Date.ToString("D"));
+                    try { group.Remove(item); } catch { }
+                    if (group.Count == 0) _groupedDataList.Remove(group);
+                }
+
+            if (e.NewItems != null)
+            {
+                var query = from TranscationData item in e.NewItems
+                            orderby item.DateTime
+                            group item by item.Date into g
+                            select new { GroupName = g.Key.ToString("D"), Items = g };
+                foreach (var g in query)
+                {
+                    TranscationGroup group = _groupedDataList.FirstOrDefault(x => x.Key == g.GroupName.ToString());
+                    if (group == null)
+                    {
+                        group = new TranscationGroup();
+                        group.Key = g.GroupName;
+                        _groupedDataList.Add(group);
+                    }
+                    foreach (TranscationData item in g.Items)
+                    {
+                        group.Add(item);
+                    }
+                }
+            }
         }
 
         public string Hint
@@ -40,6 +90,25 @@ namespace EcardQuery
         {
             get { return progressRing.IsActive; }
             set { progressRing.IsActive = value; }
+        }
+
+        static void GetGroupsByDate(IEnumerable<TranscationData> inputData, ObservableCollection<TranscationGroup> outputData)
+        {
+            outputData.Clear();
+
+            var query = from item in inputData
+                        orderby item.DateTime
+                        group item by item.DateTime.Date into g
+                        select new { GroupName = g.Key.ToString(), Items = g };
+            foreach (var g in query)
+            {
+                TranscationGroup group = new TranscationGroup();
+                group.Key = g.GroupName;
+                foreach (TranscationData item in g.Items)
+                {
+                    group.Add(item);
+                }
+            }
         }
     }
 
@@ -62,5 +131,10 @@ namespace EcardQuery
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class TranscationGroup : ObservableCollection<TranscationData>
+    {
+        public string Key { get; set; }
     }
 }
