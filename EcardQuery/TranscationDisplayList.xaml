@@ -37,7 +37,9 @@
         </DataTemplate>
 
         <DataTemplate x:Key="GroupHeaderTemplate" x:DataType="local:TranscationGroup">
-            <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <HyperlinkButton>
+                <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
+            </HyperlinkButton>
         </DataTemplate>
 
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
