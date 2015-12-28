@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ad="using:Microsoft.Advertising.WinRT.UI"
     mc:Ignorable="d">
-    
+
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition>
@@ -19,13 +19,15 @@
     </Page.Transitions>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup CurrentStateChanging="VisualStateGroup_CurrentStateChanging">
+            <VisualStateGroup x:Name="widthStates" CurrentStateChanged="widthStates_CurrentStateChanged">
                 <VisualState x:Name="wideState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                 </VisualState>
+
                 <VisualState x:Name="narrowState">
                     <VisualState.Setters>
                         <Setter Target="gridColumn1.Width" Value="0" />
@@ -36,7 +38,43 @@
                     </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
+
+            <VisualStateGroup x:Name="panelStates">
+                <VisualStateGroup.Transitions>
+
+                    <VisualTransition From="dataState" GeneratedDuration="0" To="controlState">
+                        <Storyboard>
+                            <DrillOutThemeAnimation EntranceTargetName="controlPanel" 
+                                                    ExitTargetName="displayList" />
+                        </Storyboard>
+                    </VisualTransition>
+
+                    <VisualTransition From="controlState" GeneratedDuration="0" To="dataState">
+                        <Storyboard>
+                            <DrillInThemeAnimation EntranceTargetName="displayList" 
+                                                   ExitTargetName="controlPanel" />
+                        </Storyboard>
+                    </VisualTransition>
+
+                </VisualStateGroup.Transitions>
+
+                <VisualState x:Name="controlState" >
+                    <VisualState.Setters>
+                        <Setter Target="displayList.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="dataState">
+                    <VisualState.Setters>
+                        <Setter Target="controlPanel.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="splitState"></VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" MaxWidth="600" />
             <ColumnDefinition x:Name="gridColumn1" Width="3*" />
@@ -57,6 +95,6 @@
             <Button x:Name="submitButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Content="查询" Grid.ColumnSpan="2" Margin="8" Click="submitButton_Click" />
             <ad:AdControl Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" AdUnitId="11554056" ApplicationId="debec3ba-2069-4791-9fd9-fe0a1e117e8f" Width="300" Height="250" HorizontalAlignment="Center" />
         </Grid>
-        <local:TranscationDisplayList x:Name="displayList" Grid.Column="1" Visibility="Collapsed" Grid.Row="5" />
+        <local:TranscationDisplayList x:Name="displayList" Grid.Column="1" Grid.Row="5" />
     </Grid>
 </Page>
