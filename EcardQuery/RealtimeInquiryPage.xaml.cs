@@ -49,10 +49,9 @@ namespace EcardQuery
 
                 //显示结果面板
                 isShowingData = true;
-                displayList.Visibility = Visibility.Visible;
-                if (ActualWidth < 600)
+                if (panelStates.CurrentState==controlState)
                 {
-                    controlPanel.Visibility = Visibility.Collapsed;
+                    VisualStateManager.GoToState(this, "dataState", true);
                 }
 
                 //查询数据
@@ -79,31 +78,41 @@ namespace EcardQuery
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (e != null)
-                if (isShowingData && controlPanel.Visibility == Visibility.Collapsed && e.NavigationMode == NavigationMode.Back)
+            if (e!= null)
+                if (e.NavigationMode==NavigationMode.Back && panelStates.CurrentState==dataState)
                 {
                     e.Cancel = true;
-                    controlPanel.Visibility = Visibility.Visible;
-                    displayList.Visibility = Visibility.Collapsed;
+                    VisualStateManager.GoToState(this, "controlState", true);
                     isShowingData = false;
-                    return;
                 }
             base.OnNavigatingFrom(e);
         }
 
-        private void VisualStateGroup_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NewState == wideState)
-            {
-                controlPanel.Visibility = Visibility.Visible;
-                displayList.Visibility = Visibility.Visible;
-            }
+            if (widthStates.CurrentState == wideState)
+                VisualStateManager.GoToState(this, "splitState", false);
             else
             {
                 if (isShowingData)
-                    controlPanel.Visibility = Visibility.Collapsed;
+                    VisualStateManager.GoToState(this, "dataState", false);
                 else
-                    displayList.Visibility = Visibility.Collapsed;
+                    VisualStateManager.GoToState(this, "controlState", false);
+            }
+
+            base.OnNavigatedTo(e);
+        }
+
+        private void widthStates_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            if (widthStates.CurrentState == wideState)
+                VisualStateManager.GoToState(this, "splitState", false);
+            else
+            {
+                if (isShowingData)
+                    VisualStateManager.GoToState(this, "dataState", true);
+                else
+                    VisualStateManager.GoToState(this, "controlState", true);
             }
         }
     }
