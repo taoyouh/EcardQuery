@@ -12,7 +12,7 @@
     d:DesignWidth="400">
     
     <UserControl.Resources>
-        <CollectionViewSource x:Name="cvs1" IsSourceGrouped="True" />
+        <CollectionViewSource x:Key="CVS1" x:Name="cvs1" IsSourceGrouped="True" />
         <local:ColorConverter x:Key="ColorValueConverter"/>
         
         <DataTemplate x:Key="TranscationDisplayItemTemplate" x:DataType="local:TranscationData">
@@ -42,9 +42,32 @@
             </HyperlinkButton>
         </DataTemplate>
 
-        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
-            <TextBlock Text="{x:Bind Group.(local:TranscationGroup.Key)}" Style="{StaticResource SubtitleTextBlockStyle}" 
-                       TextWrapping="Wrap" HorizontalAlignment="Center"/>
+        <DataTemplate x:Key="ZoomedOutTemplate">
+             <StackPanel Margin="0,2">
+                <TextBlock Text="{Binding Group.Key}" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                       TextWrapping="Wrap" />
+                <Rectangle Width="400" />
+                <Grid Margin="4,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding Group.X1}" />
+                        <ColumnDefinition Width="{Binding Group.X2}" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Group.TotalOutcome}" 
+                           Grid.ColumnSpan="2" FontSize="12" />
+                    <Rectangle Fill="#3300FF00" />
+                </Grid>
+                <Grid Margin="4,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding Group.X3}" />
+                        <ColumnDefinition Width="{Binding Group.X4}" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Group.TotalIncome}" 
+                           Grid.ColumnSpan="2" FontSize="12" />
+                    <Rectangle Fill="#33FF0000" />
+                </Grid>
+                <Rectangle />
+            </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
