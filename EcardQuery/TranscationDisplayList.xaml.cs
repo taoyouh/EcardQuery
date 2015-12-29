@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -133,8 +134,134 @@ namespace EcardQuery
         }
     }
 
-    public class TranscationGroup : ObservableCollection<TranscationData>
+    public class TranscationGroup : ObservableCollection<TranscationData>, INotifyPropertyChanged
     {
+        protected override event PropertyChangedEventHandler PropertyChanged;
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, e);
+            base.OnPropertyChanged(e);
+        }
+
         public string Key { get; set; }
+
+        private decimal _totalIncome = 0;
+        public decimal TotalIncome
+        {
+            get { return _totalIncome; }
+            private set
+            {
+                _totalIncome = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("TotalIncome"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("X3"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("X4"));
+                }
+            }
+        }
+
+        private decimal _totalOutcome = 0;
+        public decimal TotalOutcome
+        {
+            get { return _totalOutcome; }
+            private set
+            {
+                _totalOutcome = value;
+                if (PropertyChanged!=null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("TotalOutcome"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("X1"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("X2"));
+                }
+            }
+        }
+
+        public GridLength X1
+        {
+            get
+            {
+                double outcome = -(double)TotalOutcome;
+                if (outcome < 50)
+                    return new GridLength(outcome / 50, GridUnitType.Star);
+                else
+                    return new GridLength(1, GridUnitType.Star);
+            }
+        }
+
+        public GridLength X2
+        {
+            get
+            {
+                double outcome = -(double)TotalOutcome;
+                if (outcome < 50)
+                    return new GridLength(1 - outcome / 50, GridUnitType.Star);
+                else
+                    return new GridLength();
+            }
+        }
+
+        public GridLength X3
+        {
+            get
+            {
+                if (TotalIncome < 50)
+                    return new GridLength((double)TotalIncome / 50, GridUnitType.Star);
+                else
+                    return new GridLength(1, GridUnitType.Star);
+            }
+        }
+
+        public GridLength X4
+        {
+            get
+            {
+                if (TotalIncome < 50)
+                    return new GridLength(1 - (double)TotalIncome / 50, GridUnitType.Star);
+                else
+                    return new GridLength();
+            }
+        }
+
+        protected override void InsertItem(int index, TranscationData item)
+        {
+            if (item.Delta > 0)
+                TotalIncome += item.Delta;
+            else
+                TotalOutcome += item.Delta;
+            base.InsertItem(index, item);
+        }
+
+        protected override void RemoveItem(int index)
+        {
+            if (this[index].Delta > 0)
+                TotalIncome += this[index].Delta;
+            else
+                TotalOutcome += this[index].Delta;
+            base.RemoveItem(index);
+        }
+
+        protected override void ClearItems()
+        {
+            TotalIncome = 0;
+            TotalOutcome = 0;
+            base.ClearItems();
+        }
+
+        protected override void SetItem(int index, TranscationData item)
+        {
+            if (this[index].Delta > 0)
+                TotalIncome -= this[index].Delta;
+            else
+                TotalOutcome -= this[index].Delta;
+
+            if (item.Delta > 0)
+                TotalIncome += item.Delta;
+            else
+                TotalOutcome += item.Delta;
+
+            base.SetItem(index, item);
+        }
     }
 }

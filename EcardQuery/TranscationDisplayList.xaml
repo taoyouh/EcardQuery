@@ -43,8 +43,31 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
-            <TextBlock Text="{x:Bind Group.(local:TranscationGroup.Key)}" Style="{StaticResource SubtitleTextBlockStyle}" 
-                       TextWrapping="Wrap" HorizontalAlignment="Center"/>
+             <StackPanel>
+                <TextBlock Text="{x:Bind Group.(local:TranscationGroup.Key)}" 
+                           Style="{StaticResource SubtitleTextBlockStyle}" 
+                       TextWrapping="Wrap" />
+                <Rectangle Width="400" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X1)}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X2)}" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{x:Bind Group.(local:TranscationGroup.TotalOutcome)}" 
+                           Style="{StaticResource BodyTextBlockStyle}" Grid.ColumnSpan="2" />
+                    <Rectangle Fill="#4C00FF00" />
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X3)}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X4)}" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{x:Bind Group.(local:TranscationGroup.TotalIncome)}" 
+                           Style="{StaticResource BodyTextBlockStyle}" Grid.ColumnSpan="2" />
+                    <Rectangle Fill="#4CFF0000" />
+                </Grid>
+                <Rectangle />
+            </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
