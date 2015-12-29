@@ -26,6 +26,7 @@ namespace EcardQuery
         {
             this.InitializeComponent();
             cvs1.Source = _groupedDataList;
+            //zoomedOutListView.DataContext = _groupedDataList;
         }
 
         private ObservableCollection<TranscationData> _dataList = new ObservableCollection<TranscationData>();
@@ -77,6 +78,7 @@ namespace EcardQuery
                     {
                         group.Add(item);
                     }
+                    var t = cvs1.View.CollectionGroups.ToList();
                 }
             }
         }
@@ -178,13 +180,14 @@ namespace EcardQuery
             }
         }
 
+        const int MAXAMOUNT = 50;
         public GridLength X1
         {
             get
             {
                 double outcome = -(double)TotalOutcome;
-                if (outcome < 50)
-                    return new GridLength(outcome / 50, GridUnitType.Star);
+                if (outcome < MAXAMOUNT)
+                    return new GridLength(outcome / MAXAMOUNT, GridUnitType.Star);
                 else
                     return new GridLength(1, GridUnitType.Star);
             }
@@ -195,8 +198,8 @@ namespace EcardQuery
             get
             {
                 double outcome = -(double)TotalOutcome;
-                if (outcome < 50)
-                    return new GridLength(1 - outcome / 50, GridUnitType.Star);
+                if (outcome < MAXAMOUNT)
+                    return new GridLength(1 - outcome / MAXAMOUNT, GridUnitType.Star);
                 else
                     return new GridLength();
             }
@@ -206,8 +209,8 @@ namespace EcardQuery
         {
             get
             {
-                if (TotalIncome < 50)
-                    return new GridLength((double)TotalIncome / 50, GridUnitType.Star);
+                if (TotalIncome < MAXAMOUNT)
+                    return new GridLength((double)TotalIncome / MAXAMOUNT, GridUnitType.Star);
                 else
                     return new GridLength(1, GridUnitType.Star);
             }
@@ -217,8 +220,8 @@ namespace EcardQuery
         {
             get
             {
-                if (TotalIncome < 50)
-                    return new GridLength(1 - (double)TotalIncome / 50, GridUnitType.Star);
+                if (TotalIncome < MAXAMOUNT)
+                    return new GridLength(1 - (double)TotalIncome / MAXAMOUNT, GridUnitType.Star);
                 else
                     return new GridLength();
             }

@@ -12,7 +12,7 @@
     d:DesignWidth="400">
     
     <UserControl.Resources>
-        <CollectionViewSource x:Name="cvs1" IsSourceGrouped="True" />
+        <CollectionViewSource x:Key="CVS1" x:Name="cvs1" IsSourceGrouped="True" />
         <local:ColorConverter x:Key="ColorValueConverter"/>
         
         <DataTemplate x:Key="TranscationDisplayItemTemplate" x:DataType="local:TranscationData">
@@ -42,29 +42,29 @@
             </HyperlinkButton>
         </DataTemplate>
 
-        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
-             <StackPanel>
-                <TextBlock Text="{x:Bind Group.(local:TranscationGroup.Key)}" 
+        <DataTemplate x:Key="ZoomedOutTemplate">
+             <StackPanel Margin="0,2">
+                <TextBlock Text="{Binding Group.Key}" 
                            Style="{StaticResource SubtitleTextBlockStyle}" 
                        TextWrapping="Wrap" />
                 <Rectangle Width="400" />
-                <Grid>
+                <Grid Margin="4,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X1)}" />
-                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X2)}" />
+                        <ColumnDefinition Width="{Binding Group.X1}" />
+                        <ColumnDefinition Width="{Binding Group.X2}" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Bind Group.(local:TranscationGroup.TotalOutcome)}" 
-                           Style="{StaticResource BodyTextBlockStyle}" Grid.ColumnSpan="2" />
-                    <Rectangle Fill="#4C00FF00" />
+                    <TextBlock Text="{Binding Group.TotalOutcome}" 
+                           Grid.ColumnSpan="2" FontSize="12" />
+                    <Rectangle Fill="#3300FF00" />
                 </Grid>
-                <Grid>
+                <Grid Margin="4,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X3)}" />
-                        <ColumnDefinition Width="{x:Bind Group.(local:TranscationGroup.X4)}" />
+                        <ColumnDefinition Width="{Binding Group.X3}" />
+                        <ColumnDefinition Width="{Binding Group.X4}" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Bind Group.(local:TranscationGroup.TotalIncome)}" 
-                           Style="{StaticResource BodyTextBlockStyle}" Grid.ColumnSpan="2" />
-                    <Rectangle Fill="#4CFF0000" />
+                    <TextBlock Text="{Binding Group.TotalIncome}" 
+                           Grid.ColumnSpan="2" FontSize="12" />
+                    <Rectangle Fill="#33FF0000" />
                 </Grid>
                 <Rectangle />
             </StackPanel>
