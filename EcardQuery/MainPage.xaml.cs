@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -49,13 +50,12 @@ namespace EcardQuery
                 rememberMeCheckBox.Visibility = Visibility.Visible;
             }
 
+            var x = DBCS.DBCSEncoding.GetDBCSEncoding("gb2312");
             ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
             RefreshCheckPic();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
             Frame.BackStack.Clear();
-
-            base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -69,29 +69,38 @@ namespace EcardQuery
             //TODO: 此处应当显示“Loading”的图片
             randLoadingHint.Visibility = Visibility.Visible;
             randImage.Width = 0;
-            try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
-            catch (Exception)
+
+            Stream stream;
+            BitmapImage bitmap = new BitmapImage();
+
+            const int MAX_RETRY = 3;
+            Exception ex = null;
+            for (int i = 0; i < MAX_RETRY; i++)
             {
-                try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
-                catch (Exception)
+                try
                 {
-                    ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
-                    try { randImage.Source = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync(); }
-                    catch (Exception ex)
-                    {
-                        statusBlock.Text += "获取验证码失败：\n"
-                            + ex.GetType().ToString() + "\n" + ex.Message;
-                        randResetButton.Visibility = Visibility.Visible;
-                    }
+                    stream = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync();
+                    await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
+                    randImage.Source = bitmap;
+                    ex = null;
+                    break;
+                }
+                catch (Exception exception)
+                {
+                    ex = exception;
                 }
             }
-            finally
+            if (ex != null)
             {
-                randLoadingHint.Visibility = Visibility.Collapsed;
+                statusBlock.Text += "获取验证码失败：\n"
+                    + ex.GetType().ToString() + "\n" + ex.Message;
+                randResetButton.Visibility = Visibility.Visible;
             }
+
+            randLoadingHint.Visibility = Visibility.Collapsed;
             randImage.Height = randBox.ActualHeight;
             randImage.Width = double.NaN;
-            }
+        }
 
         private void image_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -106,27 +115,60 @@ namespace EcardQuery
         private async System.Threading.Tasks.Task LoginAsync()
         {
             progressRing.IsActive = true;
-            if (rememberMeCheckBox.IsChecked.Value)
-            {
-                Windows.Storage.ApplicationDataContainer localSettings =
-                    Windows.Storage.ApplicationData.Current.LocalSettings;
-                localSettings.Values["userName"] = userNameBox.Text;
-                localSettings.Values["passwd"] = passwdBox.Password;
-            }
+            loginButton.IsEnabled = false;
+            userNameStatus.Visibility = Visibility.Collapsed;
+            passwdStatus.Visibility = Visibility.Collapsed;
+            randStatus.Visibility = Visibility.Collapsed;
+            loginStatus.Visibility = Visibility.Collapsed;
             try
             {
+                if (rememberMeCheckBox.IsChecked.Value)
+                {
+                    Windows.Storage.ApplicationDataContainer localSettings =
+                        Windows.Storage.ApplicationData.Current.LocalSettings;
+                    localSettings.Values["userName"] = userNameBox.Text;
+                    localSettings.Values["passwd"] = passwdBox.Password;
+                }
+
                 await ((App)(App.Current)).MainWebsiteHelper.LoginAsync(EcardWebsiteHelper.LoginType.PersonId, userNameBox.Text, passwdBox.Password, randBox.Text);
                 statusBlock.Text = "";
-                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquiryInit();
+                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquiryInitAsync();
                 Frame.Navigate(typeof(MeCenterPage));
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                statusBlock.Text = "登录失败：" + ex.GetType().ToString()
-                     + "\n" + ex.Message;
+                switch (ex.ParamName)
+                {
+                    case "name":
+                        userNameStatus.Visibility = Visibility.Visible;
+                        break;
+                    case "passwd":
+                        passwdStatus.Visibility = Visibility.Visible;
+                        break;
+                    case "rand":
+                        randStatus.Visibility = Visibility.Visible;
+                        break;
+                }
                 RefreshCheckPic();
             }
-            progressRing.IsActive = false;
+            catch (InvalidOperationException)
+            {
+                loginStatus.Visibility = Visibility.Visible;
+                loginStatus.Text = "登录过于频繁，请10秒后再试。";
+                RefreshCheckPic();
+            }
+            catch (HttpRequestException)
+            {
+                loginStatus.Visibility = Visibility.Visible;
+                loginStatus.Text = "网络连接失败，请稍后再试。";
+                RefreshCheckPic();
+            }
+            finally
+            {
+                progressRing.IsActive = false;
+                loginButton.IsEnabled = true;
+            }
+
         }
 
         private void userNameBox_KeyUp(object sender, KeyRoutedEventArgs e)

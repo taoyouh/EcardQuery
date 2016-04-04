@@ -18,8 +18,8 @@
     </Page.Transitions>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid MaxWidth="500">
-            <Grid.RowDefinitions>
+        <StackPanel MaxWidth="500">
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -31,18 +31,33 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="userNameBox" PlaceholderText="学号" Grid.ColumnSpan="2" Margin="8" KeyUp="userNameBox_KeyUp" TextChanged="userNameBox_TextChanged"/>
-            <PasswordBox x:Name="passwdBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" PlaceholderText="密码" KeyUp="passwdBox_KeyUp" PasswordChanged="passwdBox_PasswordChanged"/>
-            <TextBox x:Name="randBox" Margin="8" TextWrapping="Wrap" Grid.Row="3" PlaceholderText="验证码" KeyUp="randBox_KeyUp"/>
-            <Image x:Name="randImage" Margin="8" Tapped="image_Tapped" Grid.Row="3" Grid.Column="1"/>
-            <HyperlinkButton x:Name="randResetButton" Margin="8,0" Content="重新加载验证码" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" Click="randResetButton_Click" />
-            <TextBlock x:Name="randLoadingHint" Margin="8,0" Text="验证码加载中…" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"/>
-            <CheckBox x:Name="rememberMeCheckBox" Grid.Row="4" Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="记住密码" />
-            <HyperlinkButton x:Name="forgetMeButton" Content="忘记我" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="8,0" Visibility="Collapsed" Click="forgetMeButton_Click"/>
-            <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Stretch" Margin="8" VerticalAlignment="Top" Click="loginButton_Click" Grid.Row="5" Grid.ColumnSpan="2"/>
-            <TextBlock x:Name="statusBlock" TextWrapping="Wrap" Grid.Row="6" Margin="12"/>
-            <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="7" Width="50" Height="50" Grid.ColumnSpan="2"/>
-        </Grid>
+            </Grid.ColumnDefinitions>-->
+            <TextBox x:Name="userNameBox" PlaceholderText="用户名" Margin="8" KeyUp="userNameBox_KeyUp" TextChanged="userNameBox_TextChanged"/>
+            <TextBlock x:Name="userNameStatus" Text="用户名不正确" Margin="8,-8,8,8" Foreground="Red" Visibility="Collapsed" />
+            
+            <PasswordBox x:Name="passwdBox" Margin="8" PlaceholderText="密码" KeyUp="passwdBox_KeyUp" PasswordChanged="passwdBox_PasswordChanged"/>
+            <TextBlock x:Name="passwdStatus" Text="密码不正确" Margin="8,-8,8,8" Foreground="Red" Visibility="Collapsed" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="randBox" Margin="8" TextWrapping="Wrap" PlaceholderText="验证码" KeyUp="randBox_KeyUp"/>
+                <Image x:Name="randImage" Margin="8" Tapped="image_Tapped" Grid.Column="1" />
+                <HyperlinkButton x:Name="randResetButton" Margin="8,0" Content="重新加载验证码" Visibility="Collapsed" Click="randResetButton_Click" Grid.Column="1" />
+                <TextBlock x:Name="randLoadingHint" Margin="8,0" Text="验证码加载中…" VerticalAlignment="Center" Grid.Column="1"/>
+            </Grid>
+            <TextBlock x:Name="randStatus" Text="验证码不正确" Margin="8,-8,8,8" Foreground="Red" Visibility="Collapsed" />
+
+            <CheckBox x:Name="rememberMeCheckBox" Margin="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="记住密码" />
+            <HyperlinkButton x:Name="forgetMeButton" Content="忘记我" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0" Visibility="Collapsed" Click="forgetMeButton_Click"/>
+
+            <TextBlock x:Name="loginStatus" Text="" Margin="8" Foreground="Red" Visibility="Collapsed" />
+            <Button x:Name="loginButton" Content="登录" HorizontalAlignment="Stretch" Margin="8" VerticalAlignment="Top" Click="loginButton_Click" />
+            <TextBlock x:Name="statusBlock" TextWrapping="Wrap" Margin="12"/>
+        </StackPanel>
+        
+        <ProgressRing x:Name="progressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" />
     </Grid>
 </Page>
