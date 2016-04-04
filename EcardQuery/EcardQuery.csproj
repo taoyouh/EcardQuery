@@ -128,8 +128,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="DataHelperLib\Maps\big5.bin" />
-    <Content Include="DataHelperLib\Maps\gb2312.bin" />
+    <Content Include="EncodingMaps\big5.bin" />
+    <Content Include="EncodingMaps\gb2312.bin" />
     <None Include="EcardQuery_StoreKey.pfx" />
     <None Include="project.json" />
     <None Include="README.md" />
@@ -142,8 +142,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataHelperLib\DBCSEncoding.cs" />
-    <Compile Include="EcardWebsiteHelper.cs" />
     <Compile Include="HistoryInquiryPage.xaml.cs">
       <DependentUpon>HistoryInquiryPage.xaml</DependentUpon>
     </Compile>
@@ -237,6 +235,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <Import Project="..\EcardQuery.Shared\EcardQuery.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -4,6 +4,7 @@
  * ****************************************************
  */
 
+using EcardQuery;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,15 +78,25 @@ namespace DBCS
 
         private async static Task<Stream> GetInstall()
         {
+#if WINDOWS_UWP
             //此处只是简单的获取到gb2312.bin文件
             var folderInstall = Windows.ApplicationModel.Package.Current.InstalledLocation;　　//获取安装包的位置
-            var folder = await folderInstall.GetFolderAsync("DataHelperLib");　　//获取DataHelperLib文件夹
-            var mapFolder = await folder.GetFolderAsync("Maps");　　//获取Maps文件夹
-            var file = await mapFolder.GetFileAsync("gb2312.bin");　　//获取gb2312.bin
+            var folder = await folderInstall.GetFolderAsync("EncodingMaps");　　//获取DataHelperLib文件夹
+            var file = await folder.GetFileAsync("gb2312.bin");　　//获取gb2312.bin
             Stream stream = await file.OpenStreamForReadAsync();  //获取文件流
             return stream;
-
+#endif
+#if ANDROID
+            return await Task.Run(() =>
+            {
+                return Assets.Open("EncodingMaps/gb2312.bin");
+            });
+#endif
         }
+
+#if ANDROID
+        public static Android.Content.Res.AssetManager Assets { get; set; }
+#endif
 
         public override int GetByteCount(char[] chars, int index, int count)
         {

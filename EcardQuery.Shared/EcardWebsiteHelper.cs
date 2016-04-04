@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Windows.UI.Xaml.Media.Imaging;
 using DBCS;
 using System.Globalization;
 
@@ -41,17 +40,17 @@ namespace EcardQuery
         /// <summary>
         /// 获取验证码图片。应当使用try-except以处理网络错误。
         /// </summary>
-        /// <returns>验证码图片</returns>
-        public async Task<BitmapImage> GetCheckPicAsync()
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
+        /// <returns>验证码图片的流</returns>
+        public async Task<Stream> GetCheckPicAsync()
         {
-            await initGetResult.AsAsyncAction();
+            initGetResult.Wait();
             Random random = new Random();
             string url = "/getCheckpic.action?rand=" + (random.NextDouble() * 10000).ToString();
             HttpResponseMessage response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
-            BitmapImage bitmap = new BitmapImage();
-            await bitmap.SetSourceAsync((await response.Content.ReadAsStreamAsync()).AsRandomAccessStream());
-            return bitmap;
+            Stream stream = await response.Content.ReadAsStreamAsync();
+            return stream;
         }
 
         public enum LoginType { CardId = 1, PersonId = 2 };
@@ -63,6 +62,9 @@ namespace EcardQuery
         /// <param name="name">登录名</param>
         /// <param name="passwd">密码</param>
         /// <param name="rand">验证码</param>
+        /// <exception cref="ArgumentException">用户名等不正确</exception>
+        /// <exception cref="InvalidOperationException">登录过于频繁</exception>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
         /// <returns></returns>
         public async Task LoginAsync(LoginType loginType, string name, string passwd, string rand)
         {
@@ -72,7 +74,11 @@ namespace EcardQuery
             string url = "/loginstudent.action";//地址  
 
             HttpResponseMessage response = await httpClient.PostAsync(url, new StringContent(postString, Encoding.ASCII, "application/x-www-form-urlencoded"));
-            response.EnsureSuccessStatusCode();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                throw new ArgumentException("用户名错误", "name");
+            else
+                response.EnsureSuccessStatusCode();
+
             string s = await GetResponseContentStringAsync(response);
             s = s.Replace("&nbsp;", " ");
             string title = s.Substring(s.IndexOf("<title>") + 7);
@@ -87,6 +93,10 @@ namespace EcardQuery
                 content += " ";
             }
 
+            if(content.IndexOf("用户")>=0)
+            {
+                throw new ArgumentException(content, "name");
+            }
             if (content.IndexOf("验证码") >= 0)
             {
                 throw new ArgumentException(content, "rand");
@@ -112,9 +122,15 @@ namespace EcardQuery
             }
         }
 
-        public async Task<string> GetBalance()
+        /// <summary>
+        /// 获取用户当前的余额
+        /// </summary>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
+        /// <returns></returns>
+        public async Task<string> GetBalanceAsync()
         {
             HttpResponseMessage response = await httpClient.GetAsync("/accountcardUser.action");
+            response.EnsureSuccessStatusCode();
             string s = await response.Content.ReadAsStringAsync();
 
             s = s.Substring(0, s.IndexOf("<", s.IndexOf("余额")));
@@ -139,8 +155,9 @@ namespace EcardQuery
         /// <summary>
         /// 初始化交易历史查询页面，并获取账户列表。
         /// </summary>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
         /// <returns></returns>
-        public async Task HistoryInquiryInit()
+        public async Task HistoryInquiryInitAsync()
         {
             HttpResponseMessage response; string s;
             response = await httpClient.GetAsync("/accounthisTrjn.action");
@@ -169,8 +186,24 @@ namespace EcardQuery
         /// <param name="startDate">查询开始日期</param>
         /// <param name="endDate">查询结束日期</param>
         /// <param name="accountId">要查询的账户名</param>
-        /// <returns></returns>
-        public async Task HistoryInquire(string startDate, string endDate, string accountId, ICollection<TranscationData> datas)
+        /// <exception cref="InvalidOperationException">未调用HistoryInquiryInit时发生</exception>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
+        public async Task HistoryInquireAsync(DateTime startDate, DateTime endDate, string accountId, ICollection<TransactionData> datas)
+        {
+            string start = startDate.ToString("yyyyMMdd");
+            string end = endDate.ToString("yyyyMMdd");
+            await HistoryInquireAsync(start, end, accountId, datas);
+        }
+
+        /// <summary>
+        /// 查询交易历史。不能查询到当天的信息。
+        /// </summary>
+        /// <param name="startDate">查询开始日期</param>
+        /// <param name="endDate">查询结束日期</param>
+        /// <param name="accountId">要查询的账户名</param>
+        /// <exception cref="InvalidOperationException">未调用HistoryInquiryInit时发生</exception>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
+        public async Task HistoryInquireAsync(string startDate, string endDate, string accountId, ICollection<TransactionData> datas)
         {
             datas.Clear();
 
@@ -223,7 +256,7 @@ namespace EcardQuery
             return contunieUrl1;
         }
 
-        private static void History_ParseDatas(ICollection<TranscationData> datas, string s)
+        private static void History_ParseDatas(ICollection<TransactionData> datas, string s)
         {
             int index1, index2;
             while (true)
@@ -248,9 +281,9 @@ namespace EcardQuery
             }
         }
 
-        private static TranscationData History_ParseDataLine(string content)
+        private static TransactionData History_ParseDataLine(string content)
         {
-            TranscationData data = new TranscationData();
+            TransactionData data = new TransactionData();
 
             ParseDataLine_GoNext(ref content);
             data.DateTime = DateTime.Parse
@@ -282,8 +315,9 @@ namespace EcardQuery
         /// 查询当日交易流水。
         /// </summary>
         /// <param name="accountId">要查询的账户名</param>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
         /// <returns></returns>
-        public async Task RealtimeInquire(string accountId, ICollection<TranscationData> datas)
+        public async Task RealtimeInquireAsync(string accountId, ICollection<TransactionData> datas)
         {
             datas.Clear();
             HttpResponseMessage response = await httpClient.PostAsync("/accounttodatTrjnObject.action", new StringContent("account =" + accountId + "&inputObject=all&Submit=+%C8%B7+%B6%A8+", Encoding.ASCII, "application/x-www-form-urlencoded"));
@@ -308,7 +342,7 @@ namespace EcardQuery
         }
 
         #region 实时查询中的私有函数
-        private static void RealTime_ParseDatas(ICollection<TranscationData> datas, string s)
+        private static void RealTime_ParseDatas(ICollection<TransactionData> datas, string s)
         {
             int index1, index2;
             while (true)
@@ -333,9 +367,9 @@ namespace EcardQuery
             }
         }
 
-        private static TranscationData RealTime_ParseDataLine(string content)
+        private static TransactionData RealTime_ParseDataLine(string content)
         {
-            TranscationData data = new TranscationData();
+            TransactionData data = new TransactionData();
 
             ParseDataLine_GoNext(ref content);
             data.DateTime = DateTime.Parse(content.Substring(0,
@@ -389,7 +423,7 @@ namespace EcardQuery
         }
     }
 
-    public class TranscationData
+    public class TransactionData
     {
         public DateTime DateTime { get; set; }
         public DateTime Date { get { return DateTime.Date; } }

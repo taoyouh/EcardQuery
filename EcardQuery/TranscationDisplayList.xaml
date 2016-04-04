@@ -15,7 +15,7 @@
         <CollectionViewSource x:Key="CVS1" x:Name="cvs1" IsSourceGrouped="True" />
         <local:ColorConverter x:Key="ColorValueConverter"/>
         
-        <DataTemplate x:Key="TranscationDisplayItemTemplate" x:DataType="local:TranscationData">
+        <DataTemplate x:Key="TranscationDisplayItemTemplate" x:DataType="local:TransactionData">
             <Grid Margin="0,2">
                 <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="GroupHeaderTemplate" x:DataType="local:TranscationGroup">
+        <DataTemplate x:Key="GroupHeaderTemplate" x:DataType="local:TransactionGroup">
             <HyperlinkButton>
                 <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
             </HyperlinkButton>

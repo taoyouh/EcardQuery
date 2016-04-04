@@ -24,7 +24,7 @@ namespace EcardQuery
     /// </summary>
     public sealed partial class HistoryInquiryPage : Page
     {
-        ObservableCollection<TranscationData> dataList = new ObservableCollection<TranscationData>();
+        ObservableCollection<TransactionData> dataList = new ObservableCollection<TransactionData>();
         bool isShowingData = false;
 
         public HistoryInquiryPage()
@@ -33,7 +33,7 @@ namespace EcardQuery
             accountPicker.DataContext = ((App)(App.Current)).MainWebsiteHelper.HistoryAccountIds;
             accountPicker.SelectedIndex = 0;
 
-            displayList.DataList = dataList;
+            displayList.Data.InputDataCollection = dataList;
 
             startDatePicker.Date = DateTime.Today - TimeSpan.FromDays(3);
             endDatePicker.Date = DateTime.Today - TimeSpan.FromDays(1);
@@ -74,8 +74,8 @@ namespace EcardQuery
                 //初始化结果面板
                 displayList.Hint = "";
                 displayList.IsLoading = true;
-                dataList = new ObservableCollection<TranscationData>();
-                displayList.DataList = dataList;
+                dataList = new ObservableCollection<TransactionData>();
+                displayList.Data.InputDataCollection = dataList;
 
                 //显示结果面板
                 isShowingData = true;
@@ -86,7 +86,7 @@ namespace EcardQuery
                 }
 
                 //开始查找
-                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquire
+                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquireAsync
                     (startDate, endDate, (string)accountPicker.SelectedItem, dataList);
 
                 //显示查找结果

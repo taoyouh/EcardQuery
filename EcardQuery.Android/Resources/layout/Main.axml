@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <EditText
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Main_IdBox"
+        android:hint="@string/Main_Id"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+    <EditText
+        android:inputType="numberPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Main_PasswdBox"
+        android:hint="@string/Main_Pass"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+        <EditText
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/Main_RandBox"
+            android:hint="@string/Main_Rand" />
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/Main_RandImage"
+            android:scaleType="fitCenter"
+            android:clickable="true" />
+    </LinearLayout>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Main_ProgressBar"
+        android:indeterminate="true"
+        android:visibility="gone" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/Main_StatusText"
+        android:visibility="gone" />
+    <Button
+        android:text="@string/Main_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Main_LoginButton"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+</LinearLayout>
