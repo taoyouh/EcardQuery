@@ -39,9 +39,9 @@ namespace EcardQuery
 
             try
             {
-                balanceBlock.Text =
+                balanceBlock.Text = '￥' +
                     (await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync()).
-                    AccountBalance.ToString("C");
+                    AccountBalance.ToString();
             }
             catch(Exception ex)
             {
