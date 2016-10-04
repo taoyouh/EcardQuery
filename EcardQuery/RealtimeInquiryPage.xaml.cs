@@ -29,6 +29,8 @@ namespace EcardQuery
 
             accountPicker.DataContext = ((App)(App.Current)).MainWebsiteHelper.HistoryAccountIds;
             accountPicker.SelectedIndex = 0;
+            if (((App)(App.Current)).MainWebsiteHelper.HistoryAccountIds.Count == 1)
+                submitButton_Click(submitButton, null);
         }
 
         ObservableCollection<TransactionData> dataList = new ObservableCollection<TransactionData>();
