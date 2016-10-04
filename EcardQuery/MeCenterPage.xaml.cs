@@ -39,11 +39,13 @@ namespace EcardQuery
 
             try
             {
-                accountStateBlock.Text = await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync();
+                balanceBlock.Text =
+                    (await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync()).
+                    AccountBalance.ToString("C");
             }
             catch(Exception ex)
             {
-                accountStateBlock.Text = "获取余额失败：" + ex.GetType().ToString()
+                balanceBlock.Text = "获取余额失败：" + ex.GetType().ToString()
                     + "\n" + ex.Message;
             }
         }
