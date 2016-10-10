@@ -42,27 +42,27 @@
             </HyperlinkButton>
         </DataTemplate>
 
-        <DataTemplate x:Key="ZoomedOutTemplate">
-             <StackPanel Margin="0,2">
-                <TextBlock Text="{Binding Group.Key}" 
+        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
+            <StackPanel Margin="0,2">
+                <TextBlock Text="{x:Bind Group.(local:TransactionGroup.Key), Mode=OneWay}" 
                            Style="{StaticResource SubtitleTextBlockStyle}" 
                        TextWrapping="Wrap" />
                 <Rectangle Width="400" />
                 <Grid Margin="4,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding Group.X1}" />
-                        <ColumnDefinition Width="{Binding Group.X2}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TransactionGroup.X1), Mode=OneWay}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TransactionGroup.X2), Mode=OneWay}" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{Binding Group.TotalOutcome}" 
+                    <TextBlock Text="{x:Bind Group.(local:TransactionGroup.TotalOutcome), Mode=OneWay}" 
                            Grid.ColumnSpan="2" FontSize="12" />
                     <Rectangle Fill="#3300FF00" />
                 </Grid>
                 <Grid Margin="4,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding Group.X3}" />
-                        <ColumnDefinition Width="{Binding Group.X4}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TransactionGroup.X3), Mode=OneWay}" />
+                        <ColumnDefinition Width="{x:Bind Group.(local:TransactionGroup.X4), Mode=OneWay}" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{Binding Group.TotalIncome}" 
+                    <TextBlock Text="{x:Bind Group.(local:TransactionGroup.TotalIncome), Mode=OneWay}" 
                            Grid.ColumnSpan="2" FontSize="12" />
                     <Rectangle Fill="#33FF0000" />
                 </Grid>
