@@ -38,14 +38,6 @@ namespace EcardQuery
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (userNameBox.Text!="")
-            {
-                randBox.Focus(FocusState.Pointer);
-            }
-            else
-            {
-                userNameBox.Focus(FocusState.Pointer);
-            }
         }
 
         private void InputPane_Hiding(InputPane sender, InputPaneVisibilityEventArgs args)
@@ -63,28 +55,13 @@ namespace EcardQuery
         {
             base.OnNavigatedTo(e);
 
-            Windows.Storage.ApplicationDataContainer localSettings =
-                Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (localSettings.Values.ContainsKey("userName") && localSettings.Values.ContainsKey("passwd"))
-            {
-                userNameBox.Text = (string)localSettings.Values["userName"];
-                passwdBox.Password = (string)localSettings.Values["passwd"];
-                forgetMeButton.Visibility = Visibility.Visible;
-                rememberMeCheckBox.Visibility = Visibility.Collapsed;
-                rememberMeCheckBox.IsChecked = false;
-            }
-            else
-            {
-                forgetMeButton.Visibility = Visibility.Collapsed;
-                rememberMeCheckBox.Visibility = Visibility.Visible;
-            }
-
             var x = DBCS.DBCSEncoding.GetDBCSEncoding("gb2312");
             ((App)(App.Current)).MainWebsiteHelper = new EcardWebsiteHelper();
-            RefreshCheckPic();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
             Frame.BackStack.Clear();
+
+            loginWebView.Navigate(new Uri("http://ecard.sjtu.edu.cn/shjdportalHome.jsp"));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -93,159 +70,10 @@ namespace EcardQuery
             base.OnNavigatedFrom(e);
         }
 
-        private async void RefreshCheckPic()
+        private async void loginWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            //TODO: 此处应当显示“Loading”的图片
-            randLoadingHint.Visibility = Visibility.Visible;
-            randImage.Width = 0;
-
-            Stream stream;
-            BitmapImage bitmap = new BitmapImage();
-
-            const int MAX_RETRY = 3;
-            Exception ex = null;
-            for (int i = 0; i < MAX_RETRY; i++)
-            {
-                try
-                {
-                    stream = await ((App)(App.Current)).MainWebsiteHelper.GetCheckPicAsync();
-                    await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
-                    randImage.Source = bitmap;
-                    ex = null;
-                    break;
-                }
-                catch (Exception exception)
-                {
-                    ex = exception;
-                }
-            }
-            if (ex != null)
-            {
-                statusBlock.Text += "获取验证码失败：\n"
-                    + ex.GetType().ToString() + "\n" + ex.Message;
-                randResetButton.Visibility = Visibility.Visible;
-            }
-
-            randLoadingHint.Visibility = Visibility.Collapsed;
-            randImage.Height = randBox.ActualHeight;
-            randImage.Width = double.NaN;
-        }
-
-        private void image_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            RefreshCheckPic();
-        }
-
-        private async void loginButton_Click(object sender, RoutedEventArgs e)
-        {
-            await LoginAsync();
-        }
-
-        private async System.Threading.Tasks.Task LoginAsync()
-        {
-            progressRing.IsActive = true;
-            loginButton.IsEnabled = false;
-            userNameStatus.Visibility = Visibility.Collapsed;
-            passwdStatus.Visibility = Visibility.Collapsed;
-            randStatus.Visibility = Visibility.Collapsed;
-            loginStatus.Visibility = Visibility.Collapsed;
-            try
-            {
-                if (rememberMeCheckBox.IsChecked.Value)
-                {
-                    Windows.Storage.ApplicationDataContainer localSettings =
-                        Windows.Storage.ApplicationData.Current.LocalSettings;
-                    localSettings.Values["userName"] = userNameBox.Text;
-                    localSettings.Values["passwd"] = passwdBox.Password;
-                }
-
-                await ((App)(App.Current)).MainWebsiteHelper.LoginAsync(EcardWebsiteHelper.LoginType.PersonId, userNameBox.Text, passwdBox.Password, randBox.Text);
-                statusBlock.Text = "";
-                await ((App)(App.Current)).MainWebsiteHelper.HistoryInquiryInitAsync();
+            if (await ((App)(App.Current)).MainWebsiteHelper.UpdateLoginState())
                 Frame.Navigate(typeof(MeCenterPage));
-            }
-            catch (ArgumentException ex)
-            {
-                switch (ex.ParamName)
-                {
-                    case "name":
-                        userNameStatus.Visibility = Visibility.Visible;
-                        break;
-                    case "passwd":
-                        passwdStatus.Visibility = Visibility.Visible;
-                        break;
-                    case "rand":
-                        randStatus.Visibility = Visibility.Visible;
-                        break;
-                }
-                RefreshCheckPic();
-            }
-            catch (InvalidOperationException)
-            {
-                loginStatus.Visibility = Visibility.Visible;
-                loginStatus.Text = "登录过于频繁，请10秒后再试。";
-                RefreshCheckPic();
-            }
-            catch (HttpRequestException)
-            {
-                loginStatus.Visibility = Visibility.Visible;
-                loginStatus.Text = "网络连接失败，请稍后再试。";
-                RefreshCheckPic();
-            }
-            finally
-            {
-                progressRing.IsActive = false;
-                loginButton.IsEnabled = true;
-            }
-
-        }
-
-        private void userNameBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-                passwdBox.Focus(FocusState.Keyboard);
-        }
-
-        private void passwdBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-                randBox.Focus(FocusState.Keyboard);
-        }
-
-        private async void randBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                await LoginAsync();
-            }
-        }
-
-        private void userNameBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            forgetMeButton.Visibility = Visibility.Collapsed;
-            rememberMeCheckBox.Visibility = Visibility.Visible;
-        }
-
-        private void passwdBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            forgetMeButton.Visibility = Visibility.Collapsed;
-            rememberMeCheckBox.Visibility = Visibility.Visible;
-        }
-
-        private void randResetButton_Click(object sender, RoutedEventArgs e)
-        {
-            randResetButton.Visibility = Visibility.Collapsed;
-            RefreshCheckPic();
-        }
-
-        private void forgetMeButton_Click(object sender, RoutedEventArgs e)
-        {
-            Windows.Storage.ApplicationDataContainer localSettings =
-                Windows.Storage.ApplicationData.Current.LocalSettings;
-            localSettings.Values.Remove("userName");
-            localSettings.Values.Remove("passwd");
-            userNameBox.Text = "";
-            passwdBox.Password = "";
         }
     }
 }
