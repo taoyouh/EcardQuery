@@ -113,6 +113,26 @@ namespace EcardQuery
             isLoggedIn = true;
         }
 
+        /// <summary>
+        /// 更新登录状态，并返回之。
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> UpdateLoginState()
+        {
+            bool success = false;
+            for (int i=1;i<3;i++)
+            {
+                try
+                {
+                    await HistoryInquiryInitAsync();
+                    success = true;
+                    break;
+                }
+                catch (Exception) { }
+            }
+            return isLoggedIn = success;
+        }
+
         List<string> historyAccountIds = new List<string>();
         public List<string> HistoryAccountIds
         {
@@ -152,7 +172,7 @@ namespace EcardQuery
         }
 
         /// <summary>
-        /// 获取用户当前的余额（文本格式）
+        /// 获取用户当前的余额
         /// </summary>
         /// <exception cref="HttpRequestException">网络连接错误</exception>
         /// <exception cref="ParsingException">数据解析时发生错误</exception>
