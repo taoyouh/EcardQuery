@@ -18,7 +18,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>EcardQuery_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>2E9E1AB49A953D412D00D8984B92E1BE5C19D7C8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A6426539DE149F871D44CA2081656F89A1FC315F</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -131,6 +131,7 @@
     <Content Include="EncodingMaps\big5.bin" />
     <Content Include="EncodingMaps\gb2312.bin" />
     <None Include="EcardQuery_StoreKey.pfx" />
+    <None Include="EcardQuery_TemporaryKey.pfx" />
     <None Include="project.json" />
     <None Include="README.md" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
@@ -172,7 +173,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="EcardQuery_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />

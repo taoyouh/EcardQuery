@@ -365,6 +365,8 @@
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
+    <MainPackageIdentityName>8966ZhaobangChina.AI</MainPackageIdentityName>
+    <MainPackageIdentityName>8966ZhaobangChina.GPX</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.362396DF2A827</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.54556DB05D92B</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.281636678AAC8</MainPackageIdentityName>
@@ -373,7 +375,9 @@
     <MainPackageIdentityName>8966ZhaobangChina.6472952EB95CF</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.631430E59975B</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.6320116653AAB</MainPackageIdentityName>
+    <MainPackageIdentityName>8966ZhaobangChina.29742AAE14E4A</MainPackageIdentityName>
     <MainPackageIdentityName>8966ZhaobangChina.186088FBDD1A3</MainPackageIdentityName>
+    <MainPackageIdentityName>8966ZhaobangChina.2</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH69GQ2" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH69GQ2" />
 </StoreAssociation>
