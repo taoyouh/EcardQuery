@@ -32,7 +32,7 @@ namespace EcardQuery
 
             try
             {
-                balanceText.Text = 'гд' + (await MainActivity.helper.GetBalanceAsync()).
+                balanceText.Text = 'я┐е' + (await MainActivity.helper.GetBalanceAsync()).
                     AccountBalance.ToString();
             }
             catch ( HttpRequestException)
