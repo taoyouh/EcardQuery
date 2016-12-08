@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,6 +29,34 @@ namespace EcardQuery
         public MainPage()
         {
             this.InitializeComponent();
+
+            Loaded += MainPage_Loaded;
+            InputPane inputPane = InputPane.GetForCurrentView();
+            inputPane.Showing += InputPane_Showing;
+            inputPane.Hiding += InputPane_Hiding;
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (userNameBox.Text!="")
+            {
+                randBox.Focus(FocusState.Pointer);
+            }
+            else
+            {
+                userNameBox.Focus(FocusState.Pointer);
+            }
+        }
+
+        private void InputPane_Hiding(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            this.Margin = new Thickness();
+        }
+
+        private void InputPane_Showing(InputPane sender, InputPaneVisibilityEventArgs args)
+        {
+            args.EnsuredFocusedElementInView = true;
+            this.Margin = new Thickness(0, 0, 0, args.OccludedRect.Height);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

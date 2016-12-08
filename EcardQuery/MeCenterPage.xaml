@@ -20,15 +20,19 @@
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalScrollBarVisibility="Auto">
         <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="150" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="余额：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" />
-            <TextBlock x:Name="accountStateBlock" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="40" Grid.ColumnSpan="2">
+                <TextBlock Text="余额" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
+                <TextBlock x:Name="balanceBlock" Text="￥***" TextLineBounds="TrimToBaseline"
+                       HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="1" FontSize="40" Margin="4,0,0,0"/>
+            </StackPanel>
             <GridView x:Name="operationPanel" Grid.Row="1" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None" ItemClick="gridView_ItemClick" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <GridView.Items>
                     <local:OperationItem x:Name="op_historyInquiry" Title="交易历史" Width="200" Height="150">

@@ -70,13 +70,13 @@ namespace EcardQuery
             if (((App)(App.Current)).MainWebsiteHelper.IsLoggedIn)
             {
                 try
-                { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync(); }
+                { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
                 catch (Exception)
                 {
-                    try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync(); }
+                    try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
                     catch (Exception)
                     {
-                        try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceAsync(); }
+                        try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
                         catch (Exception)
                         {
                             Frame rootFrame = Window.Current.Content as Frame;

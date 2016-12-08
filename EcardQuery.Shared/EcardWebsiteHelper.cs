@@ -123,11 +123,11 @@ namespace EcardQuery
         }
 
         /// <summary>
-        /// 获取用户当前的余额
+        /// 获取用户当前的余额（文本格式）
         /// </summary>
         /// <exception cref="HttpRequestException">网络连接错误</exception>
         /// <returns></returns>
-        public async Task<string> GetBalanceAsync()
+        public async Task<string> GetBalanceStringAsync()
         {
             HttpResponseMessage response = await httpClient.GetAsync("/accountcardUser.action");
             response.EnsureSuccessStatusCode();
@@ -149,6 +149,42 @@ namespace EcardQuery
             s1 = s1.Substring(0, s1.Count() - 1);
 
             return s1;
+        }
+
+        /// <summary>
+        /// 获取用户当前的余额（文本格式）
+        /// </summary>
+        /// <exception cref="HttpRequestException">网络连接错误</exception>
+        /// <exception cref="ParsingException">数据解析时发生错误</exception>
+        /// <returns></returns>
+        public async Task<BalanceData> GetBalanceAsync()
+        {
+            HttpResponseMessage response = await httpClient.GetAsync("/accountcardUser.action");
+            response.EnsureSuccessStatusCode();
+            string s = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                BalanceData result = new BalanceData();
+                s = s.Substring(0, s.IndexOf("<", s.IndexOf("余额")));
+                s = s.Substring(s.LastIndexOf(">") + 1);
+                string accountBalance = s.Substring(0, s.IndexOf('元'));
+                result.AccountBalance = decimal.Parse(accountBalance);
+
+                string currentTransition = s.Substring(s.IndexOf("（账户余额）") + 6);
+                currentTransition = currentTransition.Substring(0, currentTransition.IndexOf('元'));
+                result.CurrentTransitionBalance = decimal.Parse(currentTransition);
+
+                string lastTransition = s.Substring(s.IndexOf("(当前过渡余额)") + 8);
+                lastTransition = lastTransition.Substring(0, lastTransition.IndexOf('元'));
+                result.LastTransitionBalance = decimal.Parse(lastTransition);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new ParsingException("", ex);
+            }
         }
 
         string historyContinueUrl;
@@ -434,5 +470,27 @@ namespace EcardQuery
         public decimal AccountBalance { get; set; }
         public decimal CardBalance { get; set; }
         public int Id { get; set; }
+    }
+
+    public struct BalanceData
+    {
+        /// <summary>
+        /// 账户余额
+        /// </summary>
+        public decimal AccountBalance { get; set; }
+        /// <summary>
+        /// 当前过渡余额
+        /// </summary>
+        public decimal CurrentTransitionBalance { get; set; }
+        /// <summary>
+        /// 上次过渡余额
+        /// </summary>
+        public decimal LastTransitionBalance { get; set; }
+    }
+
+    public class ParsingException : Exception
+    {
+        public ParsingException(string message, Exception innerException) : 
+            base(message, innerException) { }
     }
 }

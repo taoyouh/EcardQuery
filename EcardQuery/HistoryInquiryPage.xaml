@@ -92,7 +92,7 @@
                 <RowDefinition Height="*" MaxHeight="100"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <ComboBox x:Name="accountPicker" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="8" />
+            <ComboBox x:Name="accountPicker" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Header="卡号" Grid.ColumnSpan="2" Margin="8" />
             <CalendarDatePicker x:Name="startDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8" PlaceholderText="开始日期" Grid.Row="1" Header="开始日期"/>
             <CalendarDatePicker x:Name="endDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Margin="8" PlaceholderText="结束日期" Grid.Row="1" Header="结束日期"/>
             <Button x:Name="submitButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" Content="查询" Grid.ColumnSpan="2" Margin="8" Click="submitButton_Click" />
