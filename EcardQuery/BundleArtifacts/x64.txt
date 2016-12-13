@@ -1,2 +1,0 @@
-MainPackage=C:\Users\zhaoq\Documents\Visual Studio 2015\Projects\EcardQuery\EcardQuery\bin\x64\Release\EcardQuery_1.2.5.0_x64.appx
-SymbolPackage=C:\Users\zhaoq\Documents\Visual Studio 2015\Projects\EcardQuery\EcardQuery\AppPackages\EcardQuery_1.2.5.0_Test\EcardQuery_1.2.5.0_x64.appxsym
