@@ -1,11 +1,8 @@
 # EcardQuery
-
-UWP:
-[![Build status](https://ci.appveyor.com/api/projects/status/9x9jed8wpsmmgn5m/branch/master?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery/branch/master)
-
-Android:
-[![Build status](https://ci.appveyor.com/api/projects/status/04kkwjhwdtb8cedi/branch/master?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery-ve57e/branch/master)
-
+|     |  UWP   |  Android  |
+| --- | ------ | --------- |
+|master|[![Build status](https://ci.appveyor.com/api/projects/status/9x9jed8wpsmmgn5m/branch/master?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/04kkwjhwdtb8cedi/branch/master?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery-ve57e/branch/master)|
+|dev|[![Build status](https://ci.appveyor.com/api/projects/status/9x9jed8wpsmmgn5m/branch/dev?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery/branch/dev)|[![Build status](https://ci.appveyor.com/api/projects/status/04kkwjhwdtb8cedi/branch/dev?svg=true)](https://ci.appveyor.com/project/taoyouh/ecardquery-ve57e/branch/dev)|
 
 上海交通大学的校园卡查询客户端，由C#和Xamarin开发而成，目前支持Android和UWP。
 
