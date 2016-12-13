@@ -22,6 +22,7 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <ApplicationInsightsResourceId>/subscriptions/405c1b5c-80c1-46ea-b6f0-2f86f13abba1/resourcegroups/WindowsApps/providers/microsoft.insights/components/EcardQuery</ApplicationInsightsResourceId>
+    <PackageCertificateThumbprint>659BBAA821A1F82AA9169D12957C25FD621CA915</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
