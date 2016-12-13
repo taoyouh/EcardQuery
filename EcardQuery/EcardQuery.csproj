@@ -17,8 +17,7 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>EcardQuery_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>A6426539DE149F871D44CA2081656F89A1FC315F</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>EcardQuery_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -130,10 +129,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="EncodingMaps\big5.bin" />
     <Content Include="EncodingMaps\gb2312.bin" />
-    <None Include="EcardQuery_StoreKey.pfx" />
     <None Include="EcardQuery_TemporaryKey.pfx" />
     <None Include="project.json" />
-    <None Include="README.md" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
