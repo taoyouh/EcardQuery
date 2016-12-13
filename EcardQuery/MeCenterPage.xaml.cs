@@ -63,8 +63,8 @@ namespace EcardQuery
                 Frame.Navigate(typeof(HistoryInquiryPage));
             else if (e.ClickedItem == op_realTimeInquiry)
                 Frame.Navigate(typeof(RealtimeInquiryPage));
-            else if (e.ClickedItem == op_logout)
-                Frame.Navigate(typeof(MainPage));
+            //else if (e.ClickedItem == op_logout)
+            //    Frame.Navigate(typeof(MainPage));
             else if (e.ClickedItem == op_about)
                 Frame.Navigate(typeof(AboutPage));
         }
