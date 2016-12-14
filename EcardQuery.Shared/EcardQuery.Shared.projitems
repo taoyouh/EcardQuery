@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DBCSEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EcardWebsiteHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TransactionGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObservableDataGrouper.cs" />
   </ItemGroup>
