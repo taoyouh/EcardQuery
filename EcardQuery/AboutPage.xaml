@@ -37,6 +37,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -59,21 +60,26 @@
                     <TextBlock Text="zhaobang.china@hotmail.com" TextWrapping="Wrap" />
                 </HyperlinkButton>
 
-                <TextBlock Text="所有数据来自http://ecard.sjtu.edu.cn/，本程序对数据准确性不作任何保证。" Grid.Row="4" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+                <TextBlock Text="鼓励作者" Margin="6" Grid.Row="4" />
+                <HyperlinkButton x:Name="donateButton" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Margin="6,0" Click="donateButton_Click">
+                    <TextBlock Text="应用商店打赏（支持支付宝）" />
+                </HyperlinkButton>
 
-                <TextBlock Text="开源软件声明：GB2312解码器Encoding for Silverlight版权归Aimeast所有。" Grid.Row="5" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
-                <HyperlinkButton x:Name="liscenseButton_DBCS" Grid.Row="6" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_DBCS_Click">
+                <TextBlock Text="所有数据来自http://ecard.sjtu.edu.cn/，本程序对数据准确性不作任何保证。" Grid.Row="5" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+
+                <TextBlock Text="开源软件声明：GB2312解码器Encoding for Silverlight版权归Aimeast所有。" Grid.Row="6" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+                <HyperlinkButton x:Name="liscenseButton_DBCS" Grid.Row="7" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_DBCS_Click">
                     <TextBlock Text="Encoding for Silverlight协议" TextWrapping="Wrap" />
                 </HyperlinkButton>
-                <HyperlinkButton x:Name="sourceCodeButton_DBCS" Grid.Row="7" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_DBCS_Click" >
+                <HyperlinkButton x:Name="sourceCodeButton_DBCS" Grid.Row="8" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_DBCS_Click" >
                     <TextBlock Text="原项目地址：https://github.com/Aimeast/Encoding4Silverlight" TextWrapping="Wrap" />
                 </HyperlinkButton>
 
-                <TextBlock Text="开源软件声明本程序使用Application Insights进行运行状况分析，Application Insights版权归Microsoft Corporation所有" Grid.Row="8" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
-                <HyperlinkButton x:Name="liscenseButton_AppInsights" Grid.Row="9" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_AppInsights_Click">
+                <TextBlock Text="开源软件声明本程序使用Application Insights进行运行状况分析，Application Insights版权归Microsoft Corporation所有" Grid.Row="9" Grid.ColumnSpan="2" Margin="6" TextWrapping="WrapWholeWords" />
+                <HyperlinkButton x:Name="liscenseButton_AppInsights" Grid.Row="10" Margin="6,0" Grid.ColumnSpan="2" Click="liscenseButton_AppInsights_Click">
                     <TextBlock Text="Application Insights协议" TextWrapping="Wrap" />
                 </HyperlinkButton>
-                <HyperlinkButton x:Name="sourceCodeButton_AppInsights" Grid.Row="10" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_AppInsights_Click" >
+                <HyperlinkButton x:Name="sourceCodeButton_AppInsights" Grid.Row="11" Margin="6,0" Grid.ColumnSpan="2" Click="sourceCodeButton_AppInsights_Click" >
                     <TextBlock Text="原项目地址：https://github.com/Microsoft/ApplicationInsights-Home" TextWrapping="Wrap" />
                 </HyperlinkButton>
 
