@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcardQuery", "EcardQuery\EcardQuery.csproj", "{0D809766-A6D5-49DB-BC21-190659F4CFD7}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EcardQuery.Shared", "EcardQuery.Shared\EcardQuery.Shared.shproj", "{F258B5C5-15D6-48CB-969F-644CEEB70B4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcardQuery.Android", "EcardQuery.Android\EcardQuery.Android.csproj", "{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcardQuery.UWP", "EcardQuery.UWP\EcardQuery.UWP.csproj", "{0D809766-A6D5-49DB-BC21-190659F4CFD7}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -26,6 +26,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|x64.ActiveCfg = Release|Any CPU
+		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|x86.ActiveCfg = Release|Any CPU
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Debug|ARM.ActiveCfg = Debug|ARM
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Debug|ARM.Build.0 = Debug|ARM
@@ -46,18 +58,6 @@ Global
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Release|x86.ActiveCfg = Release|x86
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Release|x86.Build.0 = Release|x86
 		{0D809766-A6D5-49DB-BC21-190659F4CFD7}.Release|x86.Deploy.0 = Release|x86
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|x64.ActiveCfg = Release|Any CPU
-		{F1D38347-FBB6-4FFA-8B88-432FEB2D61B1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
