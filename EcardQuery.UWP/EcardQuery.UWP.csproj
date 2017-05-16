@@ -7,8 +7,8 @@
     <ProjectGuid>{0D809766-A6D5-49DB-BC21-190659F4CFD7}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EcardQuery</RootNamespace>
-    <AssemblyName>EcardQuery</AssemblyName>
+    <RootNamespace>EcardQuery.UWP</RootNamespace>
+    <AssemblyName>EcardQuery.UWP</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -166,6 +166,9 @@
     <Compile Include="TranscationDisplayList.xaml.cs">
       <DependentUpon>TranscationDisplayList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XamarinPage.xaml.cs">
+      <DependentUpon>XamarinPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -221,6 +224,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="XamarinPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
@@ -234,6 +241,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="..\EcardQuery.Shared\EcardQuery.Shared.projitems" Label="Shared" />
+  <Import Project="..\EcardQuery.UI\EcardQuery.UI.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
