@@ -13,7 +13,8 @@ namespace EcardQuery
 {
     public class EcardWebsiteHelper : IDisposable
     {
-        HttpClient httpClient = new HttpClient();
+        CookieContainer cookieContainer;
+        HttpClient httpClient;
         Task<HttpResponseMessage> initGetResult;
 
         public static EcardWebsiteHelper Current { get; set; } =
@@ -30,6 +31,13 @@ namespace EcardQuery
 
         public EcardWebsiteHelper()
         {
+            cookieContainer = new CookieContainer();
+            var _handler = new HttpClientHandler()
+            {
+                CookieContainer = cookieContainer
+            };
+            httpClient = new HttpClient(_handler);
+
             httpClient.DefaultRequestHeaders.Host = "ecard.sjtu.edu.cn";
             httpClient.BaseAddress = new Uri("http://ecard.sjtu.edu.cn/");
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("UTF-8"));
@@ -122,6 +130,17 @@ namespace EcardQuery
         /// <returns></returns>
         public async Task<bool> UpdateLoginState()
         {
+#if WINDOWS_UWP
+            var filter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
+            var uri = new Uri("http://ecard.sjtu.edu.cn");
+            var cookies = filter.CookieManager.GetCookies(uri);
+            foreach(var item in cookies)
+            {
+                cookieContainer.Add(uri, 
+                    new Cookie(item.Name, item.Value, item.Path, item.Domain));
+                cookieContainer.SetCookies(uri, item.Name);
+            }
+#endif
             bool success = false;
             for (int i=1;i<3;i++)
             {
@@ -134,6 +153,26 @@ namespace EcardQuery
                 catch (Exception) { }
             }
             return isLoggedIn = success;
+        }
+
+        public void Logout()
+        {
+#if WINDOWS_UWP
+            var filter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
+            var cookies = filter.CookieManager.GetCookies(new Uri("http://ecard.sjtu.edu.cn"));
+            foreach(var item in cookies)
+            {
+                filter.CookieManager.DeleteCookie(item);
+            }
+
+            cookies = filter.CookieManager.GetCookies(new Uri("https://jaccount.sjtu.edu.cn"));
+            foreach (var item in cookies)
+            {
+                filter.CookieManager.DeleteCookie(item);
+            }
+#endif
+            historyAccountIds.Clear();
+            isLoggedIn = false;
         }
 
         List<string> historyAccountIds = new List<string>();

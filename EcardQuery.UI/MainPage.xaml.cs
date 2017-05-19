@@ -37,5 +37,15 @@ namespace EcardQuery.UI
         {
             Navigation.PushAsync(new AboutPage());
         }
+
+        private async void Op_logout_Tapped(object sender, EventArgs e)
+        {
+            EcardWebsiteHelper.Current.Logout();
+            await Navigation.PushAsync(new LoginPage());
+            while(Navigation.NavigationStack.Count>1)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack.First());
+            }
+        }
     }
 }

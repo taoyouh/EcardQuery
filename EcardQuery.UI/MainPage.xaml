@@ -44,6 +44,11 @@
                     Detail="包括开源软件协议"
                     Tapped="Op_about_Tapped"
                     Text="关于" />
+                <TextCell
+                    x:Name="op_logout"
+                    Detail="退出当前登录用户"
+                    Tapped="Op_logout_Tapped"
+                    Text="注销" />
             </TableSection>
         </TableRoot>
     </TableView>
