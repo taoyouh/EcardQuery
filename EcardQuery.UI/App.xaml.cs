@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 using Xamarin.Forms;
 
 namespace EcardQuery.UI
@@ -25,6 +27,9 @@ namespace EcardQuery.UI
         protected override void OnStart ()
 		{
             // Handle when your app starts
+            MobileCenter.Start("uwp=4de696b4-d7f0-4692-9fdd-9cb902431fd1;" +
+                   "android=1893da84-a2b0-4eed-a253-adfb55392870",
+                   typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep ()
