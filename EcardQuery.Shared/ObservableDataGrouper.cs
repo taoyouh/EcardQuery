@@ -8,6 +8,11 @@ namespace EcardQuery
 {
     public class ObservableDataGrouper
     {
+        public ObservableDataGrouper()
+        {
+            _inputDataCollection.CollectionChanged += DataList_CollectionChanged;
+        }
+
         private ObservableCollection<TransactionGroup> _groupedDataCollection = new ObservableCollection<TransactionGroup>();
         private ObservableCollection<TransactionData> _inputDataCollection = new ObservableCollection<TransactionData>();
         public ObservableCollection<TransactionData> InputDataCollection

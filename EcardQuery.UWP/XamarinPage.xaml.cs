@@ -37,7 +37,7 @@ namespace EcardQuery.UWP
             }
             else
             {
-                throw new InvalidOperationException();
+                LoadApplication(new UI.App());
             }
         }
     }

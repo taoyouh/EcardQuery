@@ -16,80 +16,21 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace EcardQuery
+namespace EcardQuery.UWP
 {
     /// <summary>
     /// 提供特定于应用程序的行为，以补充默认的应用程序类。
     /// </summary>
     sealed partial class App : Application
     {
-        bool backHandled = false;
-
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
         /// </summary>
         public App()
         {
-#if DEBUG
-#else
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session |
-                Microsoft.ApplicationInsights.WindowsCollectors.PageView |
-                Microsoft.ApplicationInsights.WindowsCollectors.UnhandledException);
-#endif
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            this.Resuming += OnResuming;
-        }
-
-        private EcardWebsiteHelper _websiteHelper;
-        public EcardWebsiteHelper MainWebsiteHelper
-        {
-            get { return _websiteHelper; }
-            set { _websiteHelper = value; }
-        }
-
-        private void App_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame.CanGoBack)
-            {
-                rootFrame.GoBack();
-                e.Handled = true;
-            }
-            else
-            {
-                e.Handled = false;
-            }
-        }
-
-        private async void OnResuming(object sender, object e)
-        {
-            if (((App)(App.Current)).MainWebsiteHelper.IsLoggedIn)
-            {
-                try
-                { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
-                catch (Exception)
-                {
-                    try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
-                    catch (Exception)
-                    {
-                        try { await ((App)(App.Current)).MainWebsiteHelper.GetBalanceStringAsync(); }
-                        catch (Exception)
-                        {
-                            Frame rootFrame = Window.Current.Content as Frame;
-                            rootFrame.Navigate(typeof(MainPage));
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Frame rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(MainPage));
-            }
         }
 
         /// <summary>
@@ -134,16 +75,10 @@ namespace EcardQuery
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 参数
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                rootFrame.Navigate(typeof(XamarinPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
             Window.Current.Activate();
-
-            if (!backHandled)
-            {
-                SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-                backHandled = true;
-            }
         }
 
         /// <summary>

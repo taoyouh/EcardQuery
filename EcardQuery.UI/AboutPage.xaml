@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EcardQuery.UI.AboutPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="关于">
+
+    <ScrollView Padding="12">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label
+                x:Name="AppTitleBlock"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                FontSize="25.5"
+                LineBreakMode="WordWrap"
+                Text="校园卡查询（上海交通大学）" />
+
+            <Label
+                Grid.Row="1"
+                Margin="0"
+                Text="版本" />
+            <Label
+                x:Name="VersionBlock"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0"
+                LineBreakMode="WordWrap"
+                Text="0.0.0.0" />
+
+            <Label
+                Grid.Row="2"
+                Margin="0"
+                Text="开发商" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0"
+                LineBreakMode="WordWrap"
+                Text="兆邦中国" />
+
+            <Label
+                Grid.Row="3"
+                Margin="0"
+                Text="反馈邮箱"
+                VerticalOptions="Fill"
+                VerticalTextAlignment="Center" />
+            <Button
+                x:Name="emailButton"
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0"
+                Clicked="EmailButton_Clicked"
+                HorizontalOptions="Start"
+                Text="zhaobang.china@hotmail.com"
+                VerticalOptions="Start" />
+
+            <Label
+                Grid.Row="4"
+                Margin="0"
+                Text="鼓励作者"
+                VerticalOptions="Fill"
+                VerticalTextAlignment="Center" />
+            <Button
+                x:Name="donateButton"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="0"
+                Clicked="DonateButton_Clicked"
+                HorizontalOptions="Start"
+                Text="应用商店打赏（支持支付宝）"
+                VerticalOptions="Start" />
+
+            <Label
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                LineBreakMode="WordWrap"
+                Text="所有数据来自http://ecard.sjtu.edu.cn/，本程序对数据准确性不作任何保证。" />
+
+            <Label
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
+                Margin="0"
+                LineBreakMode="WordWrap"
+                Text="GB2312解码器Encoding for Silverlight由Aimeast提供。" />
+            <Button
+                x:Name="licenceButton_DBCS"
+                Grid.Row="7"
+                Clicked="LicenceButton_DBCS_Clicked"
+                Text="许可协议" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

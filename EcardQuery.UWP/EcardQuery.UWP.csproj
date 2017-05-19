@@ -135,14 +135,8 @@
     <None Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutPage.xaml.cs">
-      <DependentUpon>AboutPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HistoryInquiryPage.xaml.cs">
-      <DependentUpon>HistoryInquiryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Liscenses\LiscencePage_AppInsights.xaml.cs">
       <DependentUpon>LiscencePage_AppInsights.xaml</DependentUpon>
@@ -150,22 +144,7 @@
     <Compile Include="Liscenses\LiscensePage_DBCS.xaml.cs">
       <DependentUpon>LiscensePage_DBCS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MeCenterPage.xaml.cs">
-      <DependentUpon>MeCenterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OperationItem.xaml.cs">
-      <DependentUpon>OperationItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealtimeInquiryPage.xaml.cs">
-      <DependentUpon>RealtimeInquiryPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TranscationDisplayList.xaml.cs">
-      <DependentUpon>TranscationDisplayList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="XamarinPage.xaml.cs">
       <DependentUpon>XamarinPage.xaml</DependentUpon>
     </Compile>
@@ -177,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Icons\Refresh.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
@@ -188,39 +168,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HistoryInquiryPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Liscenses\LiscencePage_AppInsights.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Liscenses\LiscensePage_DBCS.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MeCenterPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="OperationItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RealtimeInquiryPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TranscationDisplayList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

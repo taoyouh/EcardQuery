@@ -9,7 +9,6 @@
     <Import_RootNamespace>EcardQuery</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)DBCSEncoding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EcardWebsiteHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TransactionGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObservableDataGrouper.cs" />

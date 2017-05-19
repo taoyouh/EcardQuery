@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EcardQuery.UI.HistoryInquiryMasterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="历史查询">
+    <StackLayout Orientation="Vertical" Padding="12">
+        <Label Text="卡号" />
+        <Picker
+            BindingContext="{Binding}"
+            ItemsSource="{Binding Accounts}"
+            SelectedItem="{Binding SelectedAccount}" />
+        <Label Text="开始日期" />
+        <DatePicker Date="{Binding StartDate}" />
+        <Label Text="结束日期" />
+        <DatePicker Date="{Binding EndDate}" />
+        <Button Command="{Binding SubmitCommand}" Text="查询" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EcardQuery.UI.ResultPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EcardQuery.UI"
+    Title="查询结果">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ColorConverter x:Key="ColorValueConverter" />
+            <local:TimeConverter x:Key="TimeValueConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ListView
+        BindingContext="{Binding}"
+        CachingStrategy="RecycleElement"
+        GroupDisplayBinding="{Binding Key}"
+        GroupShortNameBinding="{Binding Key}"
+        IsGroupingEnabled="true"
+        IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+        ItemsSource="{Binding ResultItems}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Padding="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="{Binding DateTime, Converter={StaticResource TimeValueConverter}}"
+                            VerticalOptions="Fill" />
+                        <Label
+                            Grid.Row="1"
+                            FontSize="11"
+                            HorizontalOptions="Start"
+                            Text="{Binding SubSystem}"
+                            VerticalOptions="Fill" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="20"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding Delta}"
+                            TextColor="{Binding Delta, Converter={StaticResource ColorValueConverter}}"
+                            VerticalOptions="Fill" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="11"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="End"
+                            Text="{Binding AccountBalance}"
+                            VerticalOptions="Fill" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Label Text="{Binding Key}" VerticalOptions="Fill"/>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+    </ListView>
+</ContentPage>

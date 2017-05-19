@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EcardQuery.UI.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="登录">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Clicked="RefreshButton_Clicked"
+            Icon="Icons/Refresh.png"
+            Text="刷新" />
+    </ContentPage.ToolbarItems>
+    <WebView x:Name="loginWebView" Navigated="LoginWebView_Navigated" />
+</ContentPage>

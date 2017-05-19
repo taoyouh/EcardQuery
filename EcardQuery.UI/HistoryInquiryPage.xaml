@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage
+    x:Class="EcardQuery.UI.HistoryInquiryPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EcardQuery.UI"
+    Title="历史查询">
+    <MasterDetailPage.Master>
+        <local:HistoryInquiryMasterPage BindingContext="{Binding MasterVM}" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <local:ResultPage BindingContext="{Binding ResultVM}" />
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

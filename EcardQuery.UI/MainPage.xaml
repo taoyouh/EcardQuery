@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EcardQuery.UI.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="校园卡查询">
+    <TableView HasUnevenRows="True">
+        <TableRoot>
+            <TableSection>
+                <ViewCell>
+                    <StackLayout
+                        Padding="40"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Label
+                            HorizontalOptions="End"
+                            Text="余额"
+                            VerticalOptions="End" />
+                        <Label
+                            x:Name="balanceBlock"
+                            Margin="4,0,0,0"
+                            FontSize="40"
+                            HorizontalOptions="Start"
+                            Text="￥***"
+                            VerticalOptions="Fill" />
+
+                    </StackLayout>
+                </ViewCell>
+            </TableSection>
+            <TableSection>
+                <TextCell
+                    x:Name="op_history"
+                    Detail="查询历史交易记录，但不能查询今天的交易"
+                    Tapped="Op_history_Tapped"
+                    Text="历史查询" />
+                <TextCell
+                    x:Name="op_realtime"
+                    Detail="快速查询今天内的交易记录"
+                    Tapped="Op_realtime_Tapped"
+                    Text="今日流水" />
+                <TextCell
+                    x:Name="op_about"
+                    Detail="包括开源软件协议"
+                    Tapped="Op_about_Tapped"
+                    Text="关于" />
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>

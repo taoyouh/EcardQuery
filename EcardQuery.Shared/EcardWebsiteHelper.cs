@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using DBCS;
 using System.Globalization;
 
 namespace EcardQuery
@@ -16,6 +15,9 @@ namespace EcardQuery
     {
         HttpClient httpClient = new HttpClient();
         Task<HttpResponseMessage> initGetResult;
+
+        public static EcardWebsiteHelper Current { get; set; } =
+            new EcardWebsiteHelper();
 
         bool isLoggedIn = false;
         public bool IsLoggedIn
@@ -26,8 +28,6 @@ namespace EcardQuery
             }
         }
 
-
-
         public EcardWebsiteHelper()
         {
             httpClient.DefaultRequestHeaders.Host = "ecard.sjtu.edu.cn";
@@ -35,6 +35,9 @@ namespace EcardQuery
             httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("UTF-8"));
             httpClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240");
             initGetResult = httpClient.GetAsync("/homeLogin.action");
+
+            //注册GB2312编码的提供程序
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         /// <summary>
@@ -470,7 +473,7 @@ namespace EcardQuery
         private async Task<string> GetResponseContentStringAsync(HttpResponseMessage response)
         {
             byte[] responseData = await response.Content.ReadAsByteArrayAsync();
-            return (await DBCSEncoding.GetDBCSEncoding("GB2312")).GetString(responseData);
+            return (Encoding.GetEncoding("GB2312")).GetString(responseData);
         }
 
         public void Dispose()
