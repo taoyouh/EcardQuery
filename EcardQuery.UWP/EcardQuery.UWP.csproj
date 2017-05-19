@@ -128,8 +128,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="EncodingMaps\big5.bin" />
-    <Content Include="EncodingMaps\gb2312.bin" />
     <None Include="EcardQuery_TemporaryKey.pfx" />
     <None Include="project.json" />
     <None Include="Service References\Application Insights\ConnectedService.json" />
@@ -137,12 +135,6 @@
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Liscenses\LiscencePage_AppInsights.xaml.cs">
-      <DependentUpon>LiscencePage_AppInsights.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Liscenses\LiscensePage_DBCS.xaml.cs">
-      <DependentUpon>LiscensePage_DBCS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XamarinPage.xaml.cs">
@@ -168,14 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Liscenses\LiscencePage_AppInsights.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Liscenses\LiscensePage_DBCS.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="XamarinPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
