@@ -65,7 +65,14 @@
         <ListView.GroupHeaderTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <Label Text="{Binding Key}" VerticalOptions="Fill"/>
+                    <Label
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        HeightRequest="24"
+                        Text="{Binding Key}"
+                        VerticalTextAlignment="End"
+                        VerticalOptions="End"
+                        Margin="12,28,12,0"/>
                 </ViewCell>
             </DataTemplate>
         </ListView.GroupHeaderTemplate>
