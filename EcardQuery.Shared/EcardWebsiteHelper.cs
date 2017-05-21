@@ -130,16 +130,20 @@ namespace EcardQuery
         /// <returns></returns>
         public async Task<bool> UpdateLoginState()
         {
+            var baseUrlString = "http://ecard.sjtu.edu.cn";
+            var baseUri = new Uri(baseUrlString);
 #if WINDOWS_UWP
             var filter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
-            var uri = new Uri("http://ecard.sjtu.edu.cn");
-            var cookies = filter.CookieManager.GetCookies(uri);
+            var cookies = filter.CookieManager.GetCookies(baseUri);
             foreach(var item in cookies)
             {
-                cookieContainer.Add(uri, 
-                    new Cookie(item.Name, item.Value, item.Path, item.Domain));
-                cookieContainer.SetCookies(uri, item.Name);
+                cookieContainer.SetCookies(baseUri, $"{item.Name}={item.Value}");
             }
+#endif
+#if __ANDROID__
+            var cookieManager = global::Android.Webkit.CookieManager.Instance;
+            var cookie = cookieManager.GetCookie(baseUrlString);
+            cookieContainer.SetCookies(baseUri, cookie.Replace(';', ','));
 #endif
             bool success = false;
             for (int i=1;i<3;i++)
@@ -170,6 +174,10 @@ namespace EcardQuery
             {
                 filter.CookieManager.DeleteCookie(item);
             }
+#endif
+#if __ANDROID__
+            var cookieManager = global::Android.Webkit.CookieManager.Instance;
+            cookieManager.RemoveAllCookie();
 #endif
             historyAccountIds.Clear();
             isLoggedIn = false;
@@ -333,7 +341,7 @@ namespace EcardQuery
             }
         }
 
-        #region 交易历史查询中的私有函数
+#region 交易历史查询中的私有函数
         private async Task<string> HistoryInquire_Stage1(string accountId)
         {
             HttpResponseMessage response = await httpClient.PostAsync(historyContinueUrl, new StringContent("account=" + accountId + "&inputObject=all&Submit=+%C8%B7+%B6%A8+", Encoding.ASCII, "application/x-www-form-urlencoded"));
@@ -407,7 +415,7 @@ namespace EcardQuery
                 CultureInfo.InvariantCulture);
             return data;
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// 查询当日交易流水。
@@ -439,7 +447,7 @@ namespace EcardQuery
             }
         }
 
-        #region 实时查询中的私有函数
+#region 实时查询中的私有函数
         private static void RealTime_ParseDatas(ICollection<TransactionData> datas, string s)
         {
             int index1, index2;
@@ -500,7 +508,7 @@ namespace EcardQuery
                 CultureInfo.InvariantCulture);
             return data;
         }
-        #endregion
+#endregion
 
         private static void ParseDataLine_GoNext(ref string content)
         {
