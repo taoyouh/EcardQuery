@@ -3,11 +3,12 @@
     x:Class="EcardQuery.UI.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EcardQuery.UI"
     Title="校园卡查询">
-    <TableView HasUnevenRows="True">
+    <TableView HasUnevenRows="True" Intent="Menu">
         <TableRoot>
             <TableSection>
-                <ViewCell>
+                <ViewCell IsEnabled="False">
                     <StackLayout
                         Padding="40"
                         HorizontalOptions="Center"
@@ -24,31 +25,30 @@
                             HorizontalOptions="Start"
                             Text="￥***"
                             VerticalOptions="Fill" />
-
                     </StackLayout>
                 </ViewCell>
             </TableSection>
             <TableSection>
-                <TextCell
+                <local:MenuCell
                     x:Name="op_history"
+                    Title="历史查询"
                     Detail="查询历史交易记录，但不能查询今天的交易"
-                    Tapped="Op_history_Tapped"
-                    Text="历史查询" />
-                <TextCell
+                    Tapped="Op_history_Tapped" />
+                <local:MenuCell
                     x:Name="op_realtime"
+                    Title="今日流水"
                     Detail="快速查询今天内的交易记录"
-                    Tapped="Op_realtime_Tapped"
-                    Text="今日流水" />
-                <TextCell
+                    Tapped="Op_realtime_Tapped" />
+                <local:MenuCell
                     x:Name="op_about"
+                    Title="关于"
                     Detail="包括开源软件协议"
-                    Tapped="Op_about_Tapped"
-                    Text="关于" />
-                <TextCell
+                    Tapped="Op_about_Tapped" />
+                <local:MenuCell
                     x:Name="op_logout"
+                    Title="注销"
                     Detail="退出当前登录用户"
-                    Tapped="Op_logout_Tapped"
-                    Text="注销" />
+                    Tapped="Op_logout_Tapped" />
             </TableSection>
         </TableRoot>
     </TableView>

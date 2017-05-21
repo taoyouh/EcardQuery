@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ViewCell
+    x:Class="EcardQuery.UI.MenuCell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ViewCell.View>
+        <StackLayout Padding="12" Orientation="Vertical">
+            <Label FontSize="Medium" Text="{Binding Title}" />
+            <Label FontSize="Default" Text="{Binding Detail}" />
+        </StackLayout>
+    </ViewCell.View>
+</ViewCell>
