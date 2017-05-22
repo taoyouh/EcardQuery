@@ -23,6 +23,7 @@ namespace EcardQuery.UI
             InitializeComponent();
             BindingContext = vm = new RealTimeInquiryPageViewModel();
             vm.ShowResult = ShowResult;
+            vm.DisplayAlertAsync = DisplayAlert;
             this.SizeChanged += HistoryInquiryPage_SizeChanged;
         }
 
@@ -93,12 +94,19 @@ namespace EcardQuery.UI
 
         private async void StartInquire()
         {
-            dataGrouper.InputDataCollection.Clear();
-            ShowResult();
-            ShowingResult = true;
+            try
+            {
+                dataGrouper.InputDataCollection.Clear();
+                ShowResult();
+                ShowingResult = true;
 
-            ResultVM.IsRefreshing = true;
-            await EcardWebsiteHelper.Current.RealtimeInquireAsync(MasterVM.SelectedAccount, dataGrouper.InputDataCollection);
+                ResultVM.IsRefreshing = true;
+                await EcardWebsiteHelper.Current.RealtimeInquireAsync(MasterVM.SelectedAccount, dataGrouper.InputDataCollection);
+            }
+            catch (Exception)
+            {
+                await DisplayAlertAsync("查询失败", "您仍然可以查看已经查询到的部分结果。", "关闭");
+            }
             ResultVM.IsRefreshing = false;
         }
 
@@ -138,6 +146,9 @@ namespace EcardQuery.UI
         }
 
         public Action ShowResult;
+
+        public delegate Task DisplayAlertDelegate(string title, string message, string cancel);
+        public DisplayAlertDelegate DisplayAlertAsync;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

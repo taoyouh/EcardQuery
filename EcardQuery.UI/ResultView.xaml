@@ -16,9 +16,8 @@
         GroupDisplayBinding="{Binding Key}"
         GroupShortNameBinding="{Binding Key}"
         IsGroupingEnabled="true"
-        IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
         ItemsSource="{Binding ResultItems}"
-        HasUnevenRows="True">
+                HasUnevenRows="True">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -76,5 +75,12 @@
                 </ViewCell>
             </DataTemplate>
         </ListView.GroupHeaderTemplate>
+        <ListView.Footer>
+            <Label
+                Margin="12"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding IsRefreshing}"
+                Text="正在加载……" />
+        </ListView.Footer>
     </ListView>
 </ContentView>
