@@ -148,7 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Icons\Refresh.png" />
+    <Content Include="Assets\Icons\Refresh.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
