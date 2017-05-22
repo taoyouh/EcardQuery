@@ -20,7 +20,11 @@ namespace EcardQuery.UI
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            balanceBlock.Text = $"￥{(await EcardWebsiteHelper.Current.GetBalanceAsync()).AccountBalance}";
+            try
+            {
+                balanceBlock.Text = $"￥{(await EcardWebsiteHelper.Current.GetBalanceAsync()).AccountBalance}";
+            }
+            catch (Exception) { }
         }
 
         private void Op_history_Tapped(object sender, EventArgs e)

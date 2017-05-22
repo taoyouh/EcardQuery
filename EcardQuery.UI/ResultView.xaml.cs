@@ -15,9 +15,9 @@ using Xamarin.Forms.Xaml;
 namespace EcardQuery.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ResultPage : ContentPage
+    public partial class ResultView : ContentView
     {
-        public ResultPage()
+        public ResultView()
         {
             InitializeComponent();
         }

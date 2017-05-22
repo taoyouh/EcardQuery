@@ -16,8 +16,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)HistoryInquiryMasterPage.xaml.cs">
-      <DependentUpon>HistoryInquiryMasterPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)HistoryInquiryPanel.xaml.cs">
+      <DependentUpon>HistoryInquiryPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)HistoryInquiryPage.xaml.cs">
@@ -36,16 +36,16 @@
       <DependentUpon>MenuCell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)RealtimeInquiryMasterPage.xaml.cs">
-      <DependentUpon>RealtimeInquiryMasterPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)RealtimeInquiryPanel.xaml.cs">
+      <DependentUpon>RealtimeInquiryPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)RealtimeInquiryPage.xaml.cs">
       <DependentUpon>RealtimeInquiryPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultPage.xaml.cs">
-      <DependentUpon>ResultPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)ResultView.xaml.cs">
+      <DependentUpon>ResultView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -68,13 +68,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)RealtimeInquiryMasterPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)RealtimeInquiryPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ResultPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -86,7 +86,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)HistoryInquiryMasterPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)HistoryInquiryPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

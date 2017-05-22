@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="EcardQuery.UI.ResultPage"
+<ContentView
+    x:Class="EcardQuery.UI.ResultView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:EcardQuery.UI"
-    Title="查询结果">
+    xmlns:local="clr-namespace:EcardQuery.UI">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ColorConverter x:Key="ColorValueConverter" />
@@ -18,11 +17,12 @@
         GroupShortNameBinding="{Binding Key}"
         IsGroupingEnabled="true"
         IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
-        ItemsSource="{Binding ResultItems}">
+        ItemsSource="{Binding ResultItems}"
+        HasUnevenRows="True">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <Grid Padding="12">
+                    <Grid Padding="12" VerticalOptions="Fill">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -68,13 +68,13 @@
                     <Label
                         FontSize="20"
                         FontAttributes="Bold"
-                        HeightRequest="24"
+                        MinimumHeightRequest="24"
                         Text="{Binding Key}"
                         VerticalTextAlignment="End"
-                        VerticalOptions="End"
+                        VerticalOptions="Fill"
                         Margin="12,28,12,0"/>
                 </ViewCell>
             </DataTemplate>
         </ListView.GroupHeaderTemplate>
     </ListView>
-</ContentPage>
+</ContentView>

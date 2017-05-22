@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage
+<ContentPage
     x:Class="EcardQuery.UI.RealtimeInquiryPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:EcardQuery.UI"
     Title="实时查询">
-    <MasterDetailPage.Master>
-        <local:RealtimeInquiryMasterPage BindingContext="{Binding MasterVM}" />
-    </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
-        <local:ResultPage BindingContext="{Binding ResultVM}" />
-    </MasterDetailPage.Detail>
-</MasterDetailPage>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="masterColumn" Width="*" />
+            <ColumnDefinition x:Name="detailColumn" Width="*" />
+        </Grid.ColumnDefinitions>
+        <local:RealtimeInquiryPanel BindingContext="{Binding MasterVM}" />
+        <local:ResultView Grid.Column="1" BindingContext="{Binding ResultVM}" />
+    </Grid>
+</ContentPage>

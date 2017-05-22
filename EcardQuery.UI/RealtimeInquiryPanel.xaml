@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="EcardQuery.UI.RealtimeInquiryMasterPage"
+<ContentView
+    x:Class="EcardQuery.UI.RealtimeInquiryPanel"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="实时查询">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <StackLayout Padding="12" Orientation="Vertical">
         <Label Text="卡号" />
         <Picker
@@ -16,4 +15,4 @@
             Command="{Binding SubmitCommand}"
             Text="查询" />
     </StackLayout>
-</ContentPage>
+</ContentView>

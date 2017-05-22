@@ -12,15 +12,15 @@ using Xamarin.Forms.Xaml;
 namespace EcardQuery.UI
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RealtimeInquiryMasterPage : ContentPage
+	public partial class RealtimeInquiryPanel : ContentView
 	{
-		public RealtimeInquiryMasterPage ()
+		public RealtimeInquiryPanel ()
 		{
-			InitializeComponent ();
+            InitializeComponent();
 		}
 	}
 
-    public class RealtimeInquiryMasterPageViewModel : INotifyPropertyChanged
+    public class RealtimeInquiryPanelViewModel : INotifyPropertyChanged
     {
         private IEnumerable<string> _accounts;
         public IEnumerable<string> Accounts

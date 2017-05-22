@@ -11,20 +11,73 @@ using Xamarin.Forms.Xaml;
 namespace EcardQuery.UI
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HistoryInquiryPage : MasterDetailPage
+	public partial class HistoryInquiryPage : ContentPage
 	{
-		public HistoryInquiryPage ()
+        HistoryInquiryPageViewModel vm;
+        ContentPage resultPage;
+        bool isInWideState;
+
+        public HistoryInquiryPage ()
 		{
             InitializeComponent();
-            BindingContext = new HistoryInquiryPageViewModel();
+            BindingContext = vm = new HistoryInquiryPageViewModel();
+            vm.ShowResult = ShowResult;
+            this.SizeChanged += HistoryInquiryPage_SizeChanged;
 		}
-	}
+
+        private void HistoryInquiryPage_SizeChanged(object sender, EventArgs e)
+        {
+            HandleSizeChange(Width);
+        }
+
+        private void HandleSizeChange(double width)
+        {
+            if (width > 700)
+            {
+                masterColumn.Width = new GridLength(350, GridUnitType.Absolute);
+                detailColumn.Width = new GridLength(1, GridUnitType.Star);
+                isInWideState = true;
+            }
+            else
+            {
+                masterColumn.Width = new GridLength(1, GridUnitType.Star);
+                detailColumn.Width = new GridLength(0, GridUnitType.Absolute);
+                isInWideState = false;
+            }
+            if (vm.ShowingResult)
+                ShowResult();
+            // TODO:同步滚动位置
+        }
+
+        private void ShowResult()
+        {
+            if (isInWideState)
+            {
+                if (Navigation.NavigationStack.Last() == resultPage)
+                    Navigation.PopAsync();
+            }
+            else
+            {
+                if (resultPage == null)
+                {
+                    resultPage = new ContentPage
+                    {
+                        Content = new ResultView(),
+                        BindingContext = vm.ResultVM,
+                        Title = this.Title
+                    };
+                }
+                if (Navigation.NavigationStack.Last() != resultPage)
+                    Navigation.PushAsync(resultPage);
+            }
+        }
+    }
 
     public class HistoryInquiryPageViewModel : INotifyPropertyChanged
     {
         public HistoryInquiryPageViewModel()
         {
-            MasterVM = new HistoryInquiryMasterPageViewModel()
+            MasterVM = new HistoryInquiryPanelViewModel()
             {
                 Accounts = EcardWebsiteHelper.Current.HistoryAccountIds,
                 SubmitCommand = new Command(StartInquire),
@@ -37,12 +90,16 @@ namespace EcardQuery.UI
                 ResultItems = dataGrouper.GroupedDataCollection,
                 IsRefreshing = false
             };
+            ShowingResult = false;
         }
 
         private async void StartInquire()
         {
             // TODO: 当SelectedAccount为空的时候应当提出警告
             dataGrouper.InputDataCollection.Clear();
+            ShowResult();
+            ShowingResult = true;
+
             ResultVM.IsRefreshing = true;
             await EcardWebsiteHelper.Current.HistoryInquireAsync(
                 MasterVM.StartDate, MasterVM.EndDate,
@@ -53,8 +110,19 @@ namespace EcardQuery.UI
 
         ObservableDataGrouper dataGrouper = new ObservableDataGrouper();
 
-        private HistoryInquiryMasterPageViewModel _masterVM;
-        public HistoryInquiryMasterPageViewModel MasterVM
+        private bool _showingResult;
+        public bool ShowingResult
+        {
+            get => _showingResult;
+            set
+            {
+                _showingResult = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowingResult)));
+            }
+        }
+
+        private HistoryInquiryPanelViewModel _masterVM;
+        public HistoryInquiryPanelViewModel MasterVM
         {
             get => _masterVM;
             set
@@ -74,6 +142,8 @@ namespace EcardQuery.UI
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultVM)));
             }
         }
+
+        public Action ShowResult;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

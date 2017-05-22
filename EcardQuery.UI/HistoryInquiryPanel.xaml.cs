@@ -11,15 +11,15 @@ using Xamarin.Forms.Xaml;
 namespace EcardQuery.UI
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HistoryInquiryMasterPage : ContentPage
+	public partial class HistoryInquiryPanel : ContentView
 	{
-		public HistoryInquiryMasterPage ()
+		public HistoryInquiryPanel ()
 		{
 			InitializeComponent ();
 		}
 	}
 
-    public class HistoryInquiryMasterPageViewModel : INotifyPropertyChanged
+    public class HistoryInquiryPanelViewModel : INotifyPropertyChanged
     {
         private IEnumerable<string> _accounts;
         public IEnumerable<string> Accounts
