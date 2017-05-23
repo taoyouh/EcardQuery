@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="EcardQuery.Android.EcardQuery.Android" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cn.taoyouh.ecardquery.android" android:versionName="2.0.1" android:installLocation="auto" android:versionCode="2">
 	<uses-sdk android:minSdkVersion="21" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="EcardQuery.Android" android:icon="@drawable/Icon"></application>
+	<application android:label="校园卡查询" android:icon="@drawable/Icon"></application>
 </manifest>
