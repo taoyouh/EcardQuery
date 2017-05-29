@@ -17,6 +17,8 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		EcardQuery.Shared\EcardQuery.Shared.projitems*{0d809766-a6d5-49db-bc21-190659f4cfd7}*SharedItemsImports = 4
 		EcardQuery.UI\EcardQuery.UI.projitems*{0d809766-a6d5-49db-bc21-190659f4cfd7}*SharedItemsImports = 4
+		EcardQuery.Shared\EcardQuery.Shared.projitems*{1c684270-4b7a-41a1-b4a2-e42999f274e0}*SharedItemsImports = 4
+		EcardQuery.UI\EcardQuery.UI.projitems*{1c684270-4b7a-41a1-b4a2-e42999f274e0}*SharedItemsImports = 4
 		EcardQuery.UI\EcardQuery.UI.projitems*{39811377-d899-40c7-a737-57c9df2f5a81}*SharedItemsImports = 13
 		EcardQuery.Shared\EcardQuery.Shared.projitems*{a5f4c832-d665-405c-ad0f-e8859b00a319}*SharedItemsImports = 4
 		EcardQuery.UI\EcardQuery.UI.projitems*{a5f4c832-d665-405c-ad0f-e8859b00a319}*SharedItemsImports = 4
