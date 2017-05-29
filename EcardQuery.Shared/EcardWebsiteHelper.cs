@@ -104,7 +104,7 @@ namespace EcardQuery
                 content += " ";
             }
 
-            if(content.IndexOf("用户")>=0)
+            if (content.IndexOf("用户") >= 0)
             {
                 throw new ArgumentException(content, "name");
             }
@@ -145,8 +145,15 @@ namespace EcardQuery
             var cookie = cookieManager.GetCookie(baseUrlString);
             cookieContainer.SetCookies(baseUri, cookie.Replace(';', ','));
 #endif
+#if __IOS__
+            var nsUrl = new Foundation.NSUrl(baseUrlString);
+            foreach (var item in Foundation.NSHttpCookieStorage.SharedStorage.CookiesForUrl(nsUrl))
+            {
+                cookieContainer.SetCookies(baseUri, $"{item.Name}={item.Value}");
+            }
+#endif
             bool success = false;
-            for (int i=1;i<3;i++)
+            for (int i = 1; i < 3; i++)
             {
                 try
                 {
@@ -178,6 +185,12 @@ namespace EcardQuery
 #if __ANDROID__
             var cookieManager = global::Android.Webkit.CookieManager.Instance;
             cookieManager.RemoveAllCookie();
+#endif
+#if __IOS__
+            foreach (var item in Foundation.NSHttpCookieStorage.SharedStorage.Cookies)
+            {
+                Foundation.NSHttpCookieStorage.SharedStorage.DeleteCookie(item);
+            }
 #endif
             historyAccountIds.Clear();
             isLoggedIn = false;

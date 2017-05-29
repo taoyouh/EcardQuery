@@ -28,7 +28,8 @@ namespace EcardQuery.UI
 		{
             // Handle when your app starts
             MobileCenter.Start("uwp=4de696b4-d7f0-4692-9fdd-9cb902431fd1;" +
-                   "android=1893da84-a2b0-4eed-a253-adfb55392870",
+                               "android=1893da84-a2b0-4eed-a253-adfb55392870;" +
+                               "ios=fb65509f-28f8-43a7-8bc8-c7c3c6526c68",
                    typeof(Analytics), typeof(Crashes));
         }
 

@@ -54,17 +54,19 @@ namespace EcardQuery
                 var query = from TransactionData item in e.NewItems
                             orderby item.DateTime
                             group item by item.Date into g
-                            select new { GroupName = g.Key.ToString("D"), Items = g };
+                            select g;
                 foreach (var g in query)
                 {
-                    TransactionGroup group = _groupedDataCollection.FirstOrDefault(x => x.Key == g.GroupName.ToString());
+                    TransactionGroup group = _groupedDataCollection.FirstOrDefault(x => x.Key == g.Key.ToString("D"));
                     if (group == null)
                     {
                         group = new TransactionGroup();
-                        group.Key = g.GroupName;
+                        group.Key = g.Key.ToString("D");
+                        group.ShortKey = g.Key.ToString("dd");
+
                         _groupedDataCollection.Add(group);
                     }
-                    foreach (TransactionData item in g.Items)
+                    foreach (TransactionData item in g)
                     {
                         group.Add(item);
                     }
@@ -79,12 +81,13 @@ namespace EcardQuery
             var query = from item in inputData
                         orderby item.DateTime
                         group item by item.DateTime.Date into g
-                        select new { GroupName = g.Key.ToString(), Items = g };
+                        select g;
             foreach (var g in query)
             {
                 TransactionGroup group = new TransactionGroup();
-                group.Key = g.GroupName;
-                foreach (TransactionData item in g.Items)
+                group.Key = g.Key.ToString("D");
+                group.ShortKey = g.Key.ToString("dd");
+                foreach (TransactionData item in g)
                 {
                     group.Add(item);
                 }

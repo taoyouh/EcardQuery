@@ -19,6 +19,8 @@ namespace EcardQuery
             base.OnPropertyChanged(e);
         }
 
+        public string ShortKey { get; set; }
+
         public string Key { get; set; }
 
         private decimal _totalIncome = 0;
