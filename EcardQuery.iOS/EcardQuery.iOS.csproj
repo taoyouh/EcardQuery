@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="..\EcardQuery.UI\EcardQuery.UI.projitems" Label="Shared" Condition="Exists('..\EcardQuery.UI\EcardQuery.UI.projitems')" />
   <Import Project="..\EcardQuery.Shared\EcardQuery.Shared.projitems" Label="Shared" Condition="Exists('..\EcardQuery.Shared\EcardQuery.Shared.projitems')" />
