@@ -85,7 +85,12 @@
     <MtouchI18n>cjk</MtouchI18n>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
@@ -130,8 +135,9 @@
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Properties\" />
+    <BundleResource Include="..\EcardQuery.UI\Html\BarChart.html">
+      <Link>Resources\Html\BarChart.html</Link>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -145,6 +151,16 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\EcardQuery.UI\Js\BarChart.js">
+      <Link>Resources\Js\BarChart.js</Link>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\EcardQuery.UI\Js\Chart.js">
+      <Link>Resources\Js\Chart.js</Link>
+    </BundleResource>
   </ItemGroup>
   <Import Project="..\EcardQuery.UI\EcardQuery.UI.projitems" Label="Shared" Condition="Exists('..\EcardQuery.UI\EcardQuery.UI.projitems')" />
   <Import Project="..\EcardQuery.Shared\EcardQuery.Shared.projitems" Label="Shared" Condition="Exists('..\EcardQuery.Shared\EcardQuery.Shared.projitems')" />

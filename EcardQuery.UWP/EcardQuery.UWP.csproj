@@ -96,6 +96,15 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="..\EcardQuery.UI\Html\BarChart.html">
+      <Link>Html\BarChart.html</Link>
+    </Content>
+    <Content Include="..\EcardQuery.UI\Js\BarChart.js">
+      <Link>Js\BarChart.js</Link>
+    </Content>
+    <Content Include="..\EcardQuery.UI\Js\Chart.js">
+      <Link>Js\Chart.js</Link>
+    </Content>
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -176,6 +185,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\EcardQuery.Shared\EcardQuery.Shared.projitems" Label="Shared" />
   <Import Project="..\EcardQuery.UI\EcardQuery.UI.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
