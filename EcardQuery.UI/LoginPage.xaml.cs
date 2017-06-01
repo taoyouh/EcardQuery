@@ -16,8 +16,21 @@ namespace EcardQuery.UI
 		public LoginPage ()
 		{
 			InitializeComponent ();
+        }
 
-            loginWebView.Source = "http://ecard.sjtu.edu.cn/shjdportalHome.jsp";
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            EcardWebsiteHelper.Current.LoadCookies();
+            if (await EcardWebsiteHelper.Current.UpdateLoginState())
+            {
+                await Navigation.PushAsync(new MainPage());
+                Navigation.RemovePage(this);
+            }
+            else
+            {
+                loginWebView.Source = "http://ecard.sjtu.edu.cn/shjdportalHome.jsp";
+            }
         }
 
         private async void LoginWebView_Navigated(object sender, WebNavigatedEventArgs e)

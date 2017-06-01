@@ -17,6 +17,9 @@ namespace EcardQuery
         HttpClient httpClient;
         Task<HttpResponseMessage> initGetResult;
 
+        private const string baseUrlString = "http://ecard.sjtu.edu.cn";
+        private const string settingsKeyCookies = "cookies";
+
         public static EcardWebsiteHelper Current { get; set; } =
             new EcardWebsiteHelper();
 
@@ -130,12 +133,28 @@ namespace EcardQuery
         /// <returns></returns>
         public async Task<bool> UpdateLoginState()
         {
-            var baseUrlString = "http://ecard.sjtu.edu.cn";
+            CopyCookies();
+            bool success = false;
+            for (int i = 1; i < 3; i++)
+            {
+                try
+                {
+                    await HistoryInquiryInitAsync();
+                    success = true;
+                    break;
+                }
+                catch (Exception) { }
+            }
+            return isLoggedIn = success;
+        }
+
+        private void CopyCookies()
+        {
             var baseUri = new Uri(baseUrlString);
 #if WINDOWS_UWP
             var filter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
             var cookies = filter.CookieManager.GetCookies(baseUri);
-            foreach(var item in cookies)
+            foreach (var item in cookies)
             {
                 cookieContainer.SetCookies(baseUri, $"{item.Name}={item.Value}");
             }
@@ -152,26 +171,26 @@ namespace EcardQuery
                 cookieContainer.SetCookies(baseUri, $"{item.Name}={item.Value}");
             }
 #endif
-            bool success = false;
-            for (int i = 1; i < 3; i++)
-            {
-                try
-                {
-                    await HistoryInquiryInitAsync();
-                    success = true;
-                    break;
-                }
-                catch (Exception) { }
-            }
-            return isLoggedIn = success;
         }
 
         public void Logout()
         {
+            foreach(Cookie cookie in cookieContainer.GetCookies(new Uri(baseUrlString)))
+            {
+                cookie.Expired = true;
+            }
+            ClearCookies();
+            SaveCookies();
+            historyAccountIds.Clear();
+            isLoggedIn = false;
+        }
+
+        private void ClearCookies()
+        {
 #if WINDOWS_UWP
             var filter = new Windows.Web.Http.Filters.HttpBaseProtocolFilter();
-            var cookies = filter.CookieManager.GetCookies(new Uri("http://ecard.sjtu.edu.cn"));
-            foreach(var item in cookies)
+            var cookies = filter.CookieManager.GetCookies(new Uri(baseUrlString));
+            foreach (var item in cookies)
             {
                 filter.CookieManager.DeleteCookie(item);
             }
@@ -192,8 +211,25 @@ namespace EcardQuery
                 Foundation.NSHttpCookieStorage.SharedStorage.DeleteCookie(item);
             }
 #endif
-            historyAccountIds.Clear();
-            isLoggedIn = false;
+        }
+
+        public void SaveCookies()
+        {
+            var settings = Plugin.Settings.CrossSettings.Current;
+            var cookies = cookieContainer.GetCookies(new Uri(baseUrlString));
+            var cookiesStr = new StringBuilder();
+            foreach(Cookie cookie in cookies)
+            {
+                cookiesStr.Append($"{cookie.Name}={cookie.Value},");
+            }
+            settings.AddOrUpdateValue(settingsKeyCookies, cookiesStr.ToString());
+        }
+
+        public void LoadCookies()
+        {
+            var settings = Plugin.Settings.CrossSettings.Current;
+            var cookiesStr = settings.GetValueOrDefault(settingsKeyCookies, string.Empty);
+            cookieContainer.SetCookies(new Uri(baseUrlString), cookiesStr);
         }
 
         List<string> historyAccountIds = new List<string>();

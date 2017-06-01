@@ -35,16 +35,23 @@ namespace EcardQuery.UI
 
         protected override void OnSleep ()
 		{
-			// Handle when your app sleeps
+            EcardWebsiteHelper.Current.SaveCookies();
 		}
 
 		protected override async void OnResume ()
 		{
-            if (!await EcardWebsiteHelper.Current.UpdateLoginState())
+            var navigation = (MainPage as NavigationPage).Navigation;
+            if (!(navigation.NavigationStack.First() is LoginPage))
             {
-                //TODO: Ask the user to login again
+                if (!await EcardWebsiteHelper.Current.UpdateLoginState())
+                {
+                    await navigation.PushAsync(new LoginPage());
+                    while (navigation.NavigationStack.Count > 1)
+                    {
+                        navigation.RemovePage(navigation.NavigationStack.First());
+                    }
+                }
             }
-			// Handle when your app resumes
 		}
 	}
 }
