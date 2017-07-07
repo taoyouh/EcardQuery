@@ -15,9 +15,9 @@
         CachingStrategy="RecycleElement"
         GroupDisplayBinding="{Binding Key}"
         GroupShortNameBinding="{Binding ShortKey}"
+        HasUnevenRows="True"
         IsGroupingEnabled="true"
-        ItemsSource="{Binding ResultItems}"
-                HasUnevenRows="True">
+        ItemsSource="{Binding ResultItems}">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -64,14 +64,15 @@
         <ListView.GroupHeaderTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <Label
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        MinimumHeightRequest="24"
-                        Text="{Binding Key}"
-                        VerticalTextAlignment="End"
-                        VerticalOptions="Fill"
-                        Margin="12,28,12,0"/>
+                    <StackLayout Padding="12,28,12,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            MinimumHeightRequest="24"
+                            Text="{Binding Key}"
+                            VerticalOptions="Fill"
+                            VerticalTextAlignment="End" />
+                    </StackLayout>
                 </ViewCell>
             </DataTemplate>
         </ListView.GroupHeaderTemplate>
